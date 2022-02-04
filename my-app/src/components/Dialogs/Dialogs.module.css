@@ -1,0 +1,38 @@
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.dialogs-items {
+
+}
+a{
+    color: darkblue;
+    text-decoration: none;
+    padding: 10px;
+}
+.dialog {
+
+}
+
+.dialog a:hover {
+    color: aquamarine;
+    cursor: pointer;
+}
+
+.dialog a:focus {
+    color: darkgoldenrod
+ }
+
+.messages {
+    padding: 10px;
+}
+
+.message {
+
+}
+
+.message:hover {
+    color: aquamarine;
+    cursor: pointer;
+}
