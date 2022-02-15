@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useImperativeHandle} from 'react';
 import s from './Header.module.css'
+
+
 
 const Header = () => {
     return (
@@ -8,5 +10,4 @@ const Header = () => {
         </header>
     );
 };
-
 export default Header;
