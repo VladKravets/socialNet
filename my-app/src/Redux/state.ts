@@ -1,5 +1,5 @@
 export type MessageType = {
-    id: number
+    id:number
     message: string
 }
 export type DialogType = {
@@ -13,17 +13,17 @@ export type PostType = {
 }
 export type ProfilePageType = {
     posts: Array<PostType>
-    dialogs:Array<DialogType>
+
 }
 export type DialogsPageType = {
     messages: Array<MessageType>
+    dialogs:Array<DialogType>
 }
-export type SidebarType = {}
+
 
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    sidebar: SidebarType
 }
 
 let state: RootStateType = {
@@ -31,7 +31,17 @@ let state: RootStateType = {
         posts: [
             {id: 1, message: 'Hello samurai', likesCount: 712},
             {id: 2, message: 'How are you?', likesCount: 491},
-            {id: 2, message: 'I\'m\ a ninja', likesCount: 31},
+            {id: 3, message: 'I\'m\ a ninja', likesCount: 31},
+        ]
+    },
+    dialogsPage: {
+        messages: [
+            {id:1,message: 'Hi'},
+            {id:2,message: 'How are you?'},
+            {id:3,message: 'I\'m\ great'},
+            {id:4,message: 'Hello everyone'},
+            {id:5,message: 'I ♥ you'},
+            {id:6,message: 'Where are you?'},
         ],
         dialogs: [
             {id: 1, name: 'Vlad'},
@@ -42,16 +52,5 @@ let state: RootStateType = {
             {id: 6, name: 'Mihail'},
         ]
     },
-    dialogsPage: {
-        messages: [
-            {id: 1, message: 'Hi'},
-            {id: 2, message: 'How are you?'},
-            {id: 3, message: 'I\'m\ great'},
-            {id: 4, message: 'Hello everyone'},
-            {id: 5, message: 'I ♥ you'},
-            {id: 6, message: 'Where are you?'},
-        ],
-    },
-    sidebar:{}
 }
 export default state
