@@ -17,19 +17,21 @@ export type PropsType = {
     messages: Array<MessageType>
 }
 
-const App = (props:PropsType) => {
+const App = (props: PropsType) => {
 
     return (
         <BrowserRouter>
-            <div className='app-wrapper'>
-                <Header/>
-                <Nav/>
-                <div className='app-wrapper-content'>
-                    <Routes>
-                        <Route path={'/dialogs/*'}
-                               element={<Dialogs messages={props.messages} dialogs={props.dialogs}/>}/>
-                        <Route path={'/users/*'} element={<Profile posts={props.posts}/>}/>
-                    </Routes>
+            <div className={'app'}>
+                <div className='app-wrapper'>
+                    <Header/>
+                    <Nav/>
+                    <div className='app-wrapper-content'>
+                        <Routes>
+                            <Route path={'/dialogs/*'}
+                                   element={<Dialogs messages={props.messages} dialogs={props.dialogs}/>}/>
+                            <Route path={'/users/*'} element={<Profile posts={props.posts}/>}/>
+                        </Routes>
+                    </div>
                 </div>
             </div>
         </BrowserRouter>

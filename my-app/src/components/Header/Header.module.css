@@ -1,6 +1,8 @@
 .header {
     grid-area: h;
-    background-color: #024141;
+    background: -webkit-linear-gradient(308deg, #20604f,#2a8b8e,#ce2939);background: linear-gradient(308deg, #20604f,#2a8b8e,#ce2939);
+    border-radius: 8px;
+    opacity: 0.9;
 }
 .header img{
     width: 100px;

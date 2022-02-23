@@ -7,9 +7,9 @@ import {ProfilePageType} from "../../Redux/state";
 
 const Profile = (props: ProfilePageType) => {
     return (
-        <div>
+        <div className={s.profile}>
             <ProfileInfo/>
-            <MyPosts posts={props.posts}/>
+            <MyPosts posts={props.posts} name={'My Posts'}/>
         </div>
     );
 };
