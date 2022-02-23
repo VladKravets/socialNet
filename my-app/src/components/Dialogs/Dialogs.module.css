@@ -17,7 +17,6 @@ color: white;
 
 .dialog a:hover {
     color: aquamarine;
-    cursor: pointer;
 }
 
 .dialog a:focus {
