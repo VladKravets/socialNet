@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from "../render";
+
 export type MessageType = {
     id: number
     message: string
@@ -26,7 +28,7 @@ export type RootStateType = {
     dialogsPage: DialogsPageType
 }
 
-let state: RootStateType = {
+export let state: RootStateType = {
     profilePage: {
         posts: [
             {id: 1, message: 'Hello samurai', likesCount: 712},
@@ -60,5 +62,6 @@ export const addPost = (postMessage: string) => {
         likesCount: 3
     }
     state.profilePage.posts.push(newPost)
+    rerenderEntireTree(state)
 }
 export default state
