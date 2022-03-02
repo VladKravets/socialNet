@@ -6,13 +6,10 @@ import Profile from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import {
-    addPost,
-    DialogsPageType,
     DialogType,
     MessageType,
     PostType,
-    ProfilePageType,
-    RootStateType
+    state
 } from "./Redux/state";
 
 /*export type  StatePropsType = {
@@ -41,7 +38,9 @@ const App = (props: AppPropsType) => {
                                                      dialogs={props.dialogs}
                                    />}/>
                             <Route path={'/users/*'} element={<Profile posts={props.posts}
-                                                                       addPost={props.addPost}/>}/>
+                                                                       addPost={props.addPost}
+                                                                       message={state.profilePage.newPostText}
+                            />}/>
                         </Routes>
                     </div>
                 </div>
