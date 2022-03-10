@@ -61,6 +61,20 @@ const store: StoreType = {
     },
     getState() {
         return this._state
+    },
+    dispatch(action){
+        if (action.type==='ADD_POST'){
+            const newPost: PostType = {
+                id: 5,
+                message: postMessage,
+                likesCount: 3
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._rerenderEntireTree()
+        }else if(action.type==='UPDATE-NEW-POST-TEXT'){
+            this._state.profilePage.newPostText = newText
+            this._rerenderEntireTree()
+        }
     }
 }
 
