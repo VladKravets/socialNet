@@ -2,21 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {addPost, state, subscribe} from './Redux/state';
+import state from './Redux/state';
+import store from "./Redux/state";
 
 
 export let rerenderEntireTree = () => {
     ReactDOM.render(
-        <App
-            dialogs={state.dialogsPage.dialogs}
-            messages={state.dialogsPage.messages}
-            posts={state.profilePage.posts}
-            addPost={addPost}
-        />
+        <App store={state}
+             addPost={store.addPost}
+             changePostCallback={store.changePostCallback}
+             posts={store._state.profilePage.posts}
+             message={store._state.profilePage.newPostText}/>
         , document.getElementById('root'));
 }
 
 
 rerenderEntireTree()
 
-subscribe(rerenderEntireTree)
+store.subscribe(rerenderEntireTree)

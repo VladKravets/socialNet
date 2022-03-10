@@ -2,29 +2,18 @@ import React from 'react';
 import './App.css';
 import Header from "./components/Header/Header";
 import Nav from "./components/Nav/Nav";
-import Profile from "./components/Profile/Profile";
+import Profile, {ProfilePropsType} from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
-import {BrowserRouter, Route, Routes, Link} from 'react-router-dom';
-import {
-    DialogType,
-    MessageType,
-    PostType,
-    state
-} from "./Redux/state";
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {StoreType} from "./Redux/state";
 
-/*export type  StatePropsType = {
-    state: RootStateType
-}*/
-
-export type AppPropsType = {
-    posts: Array<PostType>
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-    addPost: (postMessage: string) => void
+export type  StorePropsType = ProfilePropsType & {
+    store: StoreType
 }
 
-const App = (props: AppPropsType) => {
 
+const App = (props: StorePropsType) => {
+    const state = props.store.getState
     return (
         <BrowserRouter>
             <div className={'app'}>
@@ -34,12 +23,15 @@ const App = (props: AppPropsType) => {
                     <div className='app-wrapper-content'>
                         <Routes>
                             <Route path={'/dialogs/*'}
-                                   element={<Dialogs messages={props.messages}
-                                                     dialogs={props.dialogs}
+                                   element={<Dialogs messages={props.store._state.dialogsPage.messages}
+                                                     dialogs={props.store._state.dialogsPage.dialogs}
                                    />}/>
-                            <Route path={'/users/*'} element={<Profile posts={props.posts}
-                                                                       addPost={props.addPost}
-                                                                       message={state.profilePage.newPostText}
+                            <Route path={'/users/*'} element={<Profile posts={props.store._state.profilePage.posts}
+                                                                       addPost={props.store.addPost.bind(props.store)}
+                                                                       message={props.store._state.profilePage.newPostText}
+                                                                       changePostCallback={props.store.changePostCallback.bind(props.store)}
+                                                                       store={props.store}
+
                             />}/>
                         </Routes>
                     </div>
