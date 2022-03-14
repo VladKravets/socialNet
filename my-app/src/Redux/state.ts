@@ -62,8 +62,8 @@ const store: StoreType = {
     getState() {
         return this._state
     },
-    dispatch(action){
-        if (action.type==='ADD_POST'){
+    dispatch(action) {
+        if (action.type === 'ADD_POST') {
             const newPost: PostType = {
                 id: 5,
                 message: postMessage,
@@ -71,7 +71,7 @@ const store: StoreType = {
             }
             this._state.profilePage.posts.push(newPost)
             this._rerenderEntireTree()
-        }else if(action.type==='UPDATE-NEW-POST-TEXT'){
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
             this._state.profilePage.newPostText = newText
             this._rerenderEntireTree()
         }
