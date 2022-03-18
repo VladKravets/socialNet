@@ -1,18 +1,33 @@
+import {strict} from "assert";
+
 export type StoreType = {
     _state: RootStateType
     rerenderEntireTree: () => void
     subscribe: (callback: () => void) => void
     _rerenderEntireTree: () => void
     getState: () => RootStateType
-    dispatch:(action:AddPostActionType|ChangeNewTextActionType)=>void
+    dispatch: (action: AddPostActionType | ChangeNewTextActionType) => void
 }
-export type AddPostActionType={
-    type:"ADD_POST"
-    postMessage:string
+export type AddPostActionType = {
+    type: "ADD_POST"
+    postMessage: string
 }
-export type ChangeNewTextActionType={
-    type:'UPDATE-NEW-POST-TEXT'
-    newText:string
+export type ChangeNewTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+export type ActionsType=ReturnType<typeof AddPostAcc>|ReturnType<typeof ChangeNewTextAcc>
+export const AddPostAcc = (postMessage: string)=> {
+    return {
+        type: "ADD_POST",
+        postMessage: postMessage
+    }as const
+}
+export const ChangeNewTextAcc = (newText: string)=> {
+    return {
+        type: 'UPDATE-NEW-POST-TEXT',
+        newText: newText
+    }as const
 }
 const store: StoreType = {
     _state: {
