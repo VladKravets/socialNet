@@ -5,10 +5,11 @@ import Nav from "./components/Nav/Nav";
 import Profile, {ProfilePropsType} from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {StoreType} from "./Redux/state";
+import {AddPostActionType, ChangeNewTextActionType, StoreType} from "./Redux/state";
 
 export type  StorePropsType = ProfilePropsType & {
     store: StoreType
+    dispatch:(action:AddPostActionType|ChangeNewTextActionType)=>void
 }
 
 
@@ -27,9 +28,8 @@ const App = (props: StorePropsType) => {
                                                      dialogs={props.store._state.dialogsPage.dialogs}
                                    />}/>
                             <Route path={'/users/*'} element={<Profile posts={props.store._state.profilePage.posts}
-                                                                       addPost={props.store.addPost.bind(props.store)}
+                                                                       dispatch={props.store.dispatch.bind(props.store)}
                                                                        message={props.store._state.profilePage.newPostText}
-                                                                       changePostCallback={props.store.changePostCallback.bind(props.store)}
                                                                        store={props.store}
 
                             />}/>

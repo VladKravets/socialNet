@@ -1,8 +1,6 @@
 export type StoreType = {
     _state: RootStateType
     rerenderEntireTree: () => void
-    addPost: (newText: string) => void
-    changePostCallback: (newText: string) => void
     subscribe: (callback: () => void) => void
     _rerenderEntireTree: () => void
     getState: () => RootStateType
@@ -47,19 +45,6 @@ const store: StoreType = {
     },
     rerenderEntireTree() {
         console.log('Hello')
-    },
-    addPost(postMessage: string) {
-        const newPost: PostType = {
-            id: 5,
-            message: postMessage,
-            likesCount: 3
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._rerenderEntireTree()
-    },
-    changePostCallback(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._rerenderEntireTree()
     },
     subscribe(observer) {
         this._rerenderEntireTree = observer
