@@ -5,11 +5,17 @@ import Nav from "./components/Nav/Nav";
 import Profile, {ProfilePropsType} from "./components/Profile/Profile";
 import Dialogs from "./components/Dialogs/Dialogs";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {AddPostActionType, ChangeNewTextActionType, StoreType} from "./Redux/state";
+import store, {
+    AddPostActionType,
+    ChangeNewTextActionType,
+    SendMessageActionType,
+    StoreType,
+    UpdateMessageBodyActionType
+} from "./Redux/state";
 
 export type  StorePropsType = ProfilePropsType & {
     store: StoreType
-    dispatch:(action:AddPostActionType|ChangeNewTextActionType)=>void
+    dispatch: (action: AddPostActionType | ChangeNewTextActionType | UpdateMessageBodyActionType | SendMessageActionType) => void
 }
 
 
@@ -26,6 +32,7 @@ const App = (props: StorePropsType) => {
                             <Route path={'/dialogs/*'}
                                    element={<Dialogs messages={props.store._state.dialogsPage.messages}
                                                      dialogs={props.store._state.dialogsPage.dialogs}
+
                                    />}/>
                             <Route path={'/users/*'} element={<Profile posts={props.store._state.profilePage.posts}
                                                                        dispatch={props.store.dispatch.bind(props.store)}

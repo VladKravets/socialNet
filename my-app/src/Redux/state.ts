@@ -1,12 +1,10 @@
-import {strict} from "assert";
-
 export type StoreType = {
     _state: RootStateType
     rerenderEntireTree: () => void
     subscribe: (callback: () => void) => void
     _rerenderEntireTree: () => void
     getState: () => RootStateType
-    dispatch: (action: AddPostActionType | ChangeNewTextActionType) => void
+    dispatch: (action: AddPostActionType | ChangeNewTextActionType|UpdateMessageBodyActionType|SendMessageActionType) => void
 }
 export type AddPostActionType = {
     type: "ADD_POST"
@@ -16,18 +14,43 @@ export type ChangeNewTextActionType = {
     type: 'UPDATE-NEW-POST-TEXT'
     newText: string
 }
-export type ActionsType=ReturnType<typeof AddPostAcc>|ReturnType<typeof ChangeNewTextAcc>
-export const AddPostAcc = (postMessage: string)=> {
+export type UpdateMessageBodyActionType={
+    type:'UPDATE-NEW-MESSAGE-BODY'
+    body:string
+
+}
+export type SendMessageActionType={
+    type:'SEND_MESSAGE'
+}
+export type ActionsType =
+    ReturnType<typeof AddPostAcc>
+    | ReturnType<typeof ChangeNewTextAcc>
+    | ReturnType<typeof UpdateMessageBodyCreator>
+    | ReturnType<typeof SendMessageCreator>
+
+
+export const AddPostAcc = (postMessage: string) => {
     return {
         type: "ADD_POST",
         postMessage: postMessage
-    }as const
+    } as const
 }
-export const ChangeNewTextAcc = (newText: string)=> {
+export const ChangeNewTextAcc = (newText: string) => {
     return {
         type: 'UPDATE-NEW-POST-TEXT',
         newText: newText
-    }as const
+    } as const
+}
+export const UpdateMessageBodyCreator = (body: string) => {
+    return {
+        type: 'UPDATE_NEW_MESSAGE_BODY',
+        body: body
+    } as const
+}
+export const SendMessageCreator = () => {
+    return {
+        type: 'SEND_MESSAGE',
+    } as const
 }
 const store: StoreType = {
     _state: {
@@ -35,7 +58,7 @@ const store: StoreType = {
             posts: [
                 {id: 1, message: 'Hello samurai', likesCount: 712},
                 {id: 2, message: 'How are you?', likesCount: 491},
-                {id: 3, message: 'I\'m\ a ninja', likesCount: 31},
+                {id: 3, message: "I'm a ninja", likesCount: 31},
             ],
             newPostText: ''
         },
@@ -43,7 +66,7 @@ const store: StoreType = {
             messages: [
                 {id: 1, message: 'Hi'},
                 {id: 2, message: 'How are you?'},
-                {id: 3, message: 'I\'m\ great'},
+                {id: 3, message:"'I'm great"},
                 {id: 4, message: 'Hello everyone'},
                 {id: 5, message: 'I ♥ you'},
                 {id: 6, message: 'Where are you?'},
@@ -55,7 +78,8 @@ const store: StoreType = {
                 {id: 4, name: 'Svetlana'},
                 {id: 5, name: 'Alex'},
                 {id: 6, name: 'Mihail'},
-            ]
+            ],
+            newMessageBody: ''
         },
     },
     rerenderEntireTree() {
@@ -63,6 +87,7 @@ const store: StoreType = {
     },
     subscribe(observer) {
         this._rerenderEntireTree = observer
+
     },
     _rerenderEntireTree() {
         console.log('Hello')
@@ -81,6 +106,13 @@ const store: StoreType = {
             this._rerenderEntireTree()
         } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
             this._state.profilePage.newPostText = action.newText
+            this._rerenderEntireTree()
+        } else if (action.type === 'UPDATE-NEW-MESSAGE-BODY') {
+            this._state.dialogsPage.newMessageBody = action.body
+            this._rerenderEntireTree()
+        } else if (action.type === 'SEND_MESSAGE') {
+            let body = this._state.dialogsPage.newMessageBody = ''
+            this._state.dialogsPage.messages.push({id: 6, message: body})
             this._rerenderEntireTree()
         }
     }
@@ -108,6 +140,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     messages: Array<MessageType>
     dialogs: Array<DialogType>
+    newMessageBody: string
 }
 export type RootStateType = {
     profilePage: ProfilePageType
@@ -139,7 +172,8 @@ export let state: RootStateType = {
             {id: 4, name: 'Svetlana'},
             {id: 5, name: 'Alex'},
             {id: 6, name: 'Mihail'},
-        ]
+        ],
+        newMessageBody: ''
     },
 }
 
