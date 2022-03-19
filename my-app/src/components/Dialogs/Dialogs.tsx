@@ -8,6 +8,7 @@ import {
     SendMessageCreator, UpdateMessageBodyActionType,
     UpdateMessageBodyCreator
 } from "../../Redux/state";
+import {brotliDecompress} from "zlib";
 
 type DialogsPagePropsType = DialogsPageType & {
     dispatch: (action: AddPostActionType | ChangeNewTextActionType | UpdateMessageBodyActionType | SendMessageActionType) => void
@@ -19,7 +20,7 @@ const Dialogs = (props: DialogsPagePropsType) => {
     let messagesElements = props.messages.map(message => <MessageItem id={message.id} message={message.message}/>)
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value
-        props.dispatch(UpdateMessageBodyCreator(body))
+        props.dispatch({type: 'UPDATE-NEW-MESSAGE-BODY', body})
     }
     const onSendMessageClick = () => {
         props.dispatch(SendMessageCreator())
@@ -35,8 +36,8 @@ const Dialogs = (props: DialogsPagePropsType) => {
                 <div>
                     <div>
                         <textarea value={newMessageBody}
-    onChange={onNewMessageChange}
-    placeholder={'enter your message....'}/>
+                                  onChange={onNewMessageChange}
+                                  placeholder={'enter your message....'}/>
                     </div>
                     <div>
                         <button onClick={onSendMessageClick}>Send</button>
