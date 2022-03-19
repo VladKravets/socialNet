@@ -3,16 +3,14 @@ import s from './MyPosts.module.css'
 import Post from "./MyPost/Post";
 import {
     AddPostActionType,
-    ChangeNewTextAcc,
     ChangeNewTextActionType,
     PostType,
-    ProfilePageType
 } from "../../../Redux/state";
 
 type MyPostsPropsType = {
     posts: Array<PostType>
     name: string
-    dispatch:(action:AddPostActionType|ChangeNewTextActionType)=>void
+    dispatch: (action: AddPostActionType | ChangeNewTextActionType) => void
     newPostText: string
 }
 
@@ -22,12 +20,12 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     const addPost = () => {
         // props.addPost(props.newPostText)
-         props.dispatch({type:'ADD_POST',postMessage:props.newPostText})
-        props.dispatch({type:'UPDATE-NEW-POST-TEXT',newText:''})
+        props.dispatch({type: 'ADD_POST', postMessage: props.newPostText})
+        props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: ''})
     }
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         // props.changePostCallback(e.currentTarget.value)'
-         props.dispatch({type:'UPDATE-NEW-POST-TEXT',newText:(e.currentTarget.value)})
+        props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: (e.currentTarget.value)})
     }
 
     return (

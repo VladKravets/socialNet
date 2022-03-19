@@ -1,5 +1,5 @@
-import {profileReducer} from "./profile-reducer";
-import {dialogsReducer} from "./dialogs-reducer";
+import {AddPostAcc, ChangeNewTextAcc, profileReducer} from "./profile-reducer";
+import {dialogsReducer, SendMessageCreator, UpdateMessageBodyCreator} from "./dialogs-reducer";
 
 export type StoreType = {
     _state: RootStateType
@@ -32,29 +32,6 @@ export type ActionsType =
     | ReturnType<typeof SendMessageCreator>
 
 
-export const AddPostAcc = (postMessage: string) => {
-    return {
-        type: "ADD_POST",
-        postMessage: postMessage
-    } as const
-}
-export const ChangeNewTextAcc = (newText: string) => {
-    return {
-        type: 'UPDATE-NEW-POST-TEXT',
-        newText: newText
-    } as const
-}
-export const UpdateMessageBodyCreator = (body: string) => {
-    return {
-        type: 'UPDATE-NEW-MESSAGE-BODY',
-        body: body
-    } as const
-}
-export const SendMessageCreator = () => {
-    return {
-        type: 'SEND_MESSAGE',
-    } as const
-}
 const store: StoreType = {
     _state: {
         profilePage: {

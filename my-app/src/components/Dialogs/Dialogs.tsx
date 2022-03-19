@@ -5,10 +5,10 @@ import MessageItem from "./Message/MessageItem";
 import {
     AddPostActionType, ChangeNewTextActionType,
     DialogsPageType, SendMessageActionType,
-    SendMessageCreator, UpdateMessageBodyActionType,
-    UpdateMessageBodyCreator
+    UpdateMessageBodyActionType,
 } from "../../Redux/state";
 import {brotliDecompress} from "zlib";
+import {SendMessageCreator} from "../../Redux/dialogs-reducer";
 
 type DialogsPagePropsType = DialogsPageType & {
     dispatch: (action: AddPostActionType | ChangeNewTextActionType | UpdateMessageBodyActionType | SendMessageActionType) => void

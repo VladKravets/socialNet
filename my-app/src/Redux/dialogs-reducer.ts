@@ -1,4 +1,4 @@
-export const dialogsReducer=(state,action)=>{
+export const dialogsReducer=(state:,action)=>{
 
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-BODY':
@@ -14,4 +14,15 @@ export const dialogsReducer=(state,action)=>{
 
     return state
 
+}
+export const UpdateMessageBodyCreator = (body: string) => {
+    return {
+        type: 'UPDATE-NEW-MESSAGE-BODY',
+        body: body
+    } as const
+}
+export const SendMessageCreator = () => {
+    return {
+        type: 'SEND_MESSAGE',
+    } as const
 }
