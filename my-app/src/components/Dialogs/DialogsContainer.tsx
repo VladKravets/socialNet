@@ -4,11 +4,9 @@ import {SendMessageCreator, UpdateMessageBodyCreator} from "../../Redux/dialogs-
 import Dialogs from "./Dialogs";
 import StoreContext from '../../StoreContext';
 
-type DialogsPagePropsType = DialogsPageType & {
-    dispatch: (action: ActionsType) => void
-}
 
-const DialogsContainer = (props: DialogsPagePropsType) => {
+
+const DialogsContainer = () => {
 
     return (
         <StoreContext.Consumer>
