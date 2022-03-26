@@ -7,14 +7,13 @@ import store from "./Redux/redux-store";
 
 export let rerenderEntireTree = () => {
     ReactDOM.render(
-        <App store={store}
-             dispatch={store.dispatch.bind(store)}
-             posts={store._state.profilePage.posts}
-             message={store._state.profilePage.newPostText}/>
-        , document.getElementById('root'));
+        <App store={store}/>, document.getElementById('root'));
 }
 
 
 rerenderEntireTree()
 
-store.subscribe(rerenderEntireTree)
+store.subscribe(() => {
+    let state = store.getState()
+    rerenderEntireTree(state)
+})

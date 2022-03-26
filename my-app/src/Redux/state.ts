@@ -1,13 +1,15 @@
-import {AddPostAcc, ChangeNewTextAcc, profileReducer} from "./profile-reducer";
-import {dialogsReducer, SendMessageCreator, UpdateMessageBodyCreator} from "./dialogs-reducer";
+import { profileReducer} from "./profile-reducer";
+import {dialogsReducer} from "./dialogs-reducer";
 
-export type StoreType = {
+// export type StoreType =Store & ReturnType<typeof reducers>
+export type ActionsType=AddPostActionType | ChangeNewTextActionType | UpdateMessageBodyActionType | SendMessageActionType
+export type StoreType ={
     _state: RootStateType
     rerenderEntireTree: () => void
     subscribe: (callback: () => void) => void
     _rerenderEntireTree: (_state: {}) => void
     getState: () => RootStateType
-    dispatch: (action: AddPostActionType | ChangeNewTextActionType | UpdateMessageBodyActionType | SendMessageActionType) => void
+    dispatch: (action:ActionsType ) => void
 }
 export type AddPostActionType = {
     type: "ADD_POST"
@@ -25,12 +27,6 @@ export type UpdateMessageBodyActionType = {
 export type SendMessageActionType = {
     type: 'SEND_MESSAGE'
 }
-export type ActionsType =
-    ReturnType<typeof AddPostAcc>
-    | ReturnType<typeof ChangeNewTextAcc>
-    | ReturnType<typeof UpdateMessageBodyCreator>
-    | ReturnType<typeof SendMessageCreator>
-
 
 const store: StoreType = {
     _state: {

@@ -1,25 +1,33 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import Post from "./MyPost/Post";
-import {ActionsType, PostType} from "../../../Redux/state";
+import {ActionsType, PostType, StoreType,} from "../../../Redux/state";
+import {AddPostActionCreator} from "../../../Redux/profile-reducer";
+import MyPosts from "./MyPosts";
 
 type MyPostsPropsType = {
     posts: Array<PostType>
     name: string
+    store: StoreType
     dispatch: (action: ActionsType) => void
     newPostText: string
 }
 
-const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+const MyPostsContainer: React.FC<MyPostsPropsType> = (props) => {
+    let state = props.store.getState()
+
     const postsElements = props.posts.map(post => <Post id={post.id} message={post.message}
                                                         likesCount={post.likesCount}/>)
 
-    const addPost = () => {
-        props.addPost()
+    const onAddPost = () => {
+        props.addPost = () => {
+            props.store.dispatch(AddPostActionCreator(''))
+        }
+
     }
-    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let text = props.newPostText.current.value
-        props.newPostText(text)
+    const onPostChange = (text: string) => {
+        let action = props.newPostText(text)
+        props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: (e.currentTarget.value)})
     }
 
     return (
@@ -38,5 +46,10 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
             <div className={s.posts}>{postsElements}</div>
         </div>
     );
+    return <MyPosts updateNewPostText={onPostChange}
+                    addPost={onAddPost}
+                    posts={state.profilePage.posts}
+                    newPostText={state.profilePage.newPostText
+                    }/>
 }
-export default MyPosts;
+export default MyPostsContainer;

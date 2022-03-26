@@ -2,28 +2,28 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./Message/MessageItem";
-import {
-    AddPostActionType, ChangeNewTextActionType,
-    DialogsPageType, SendMessageActionType,
-    UpdateMessageBodyActionType,
-} from "../../Redux/state";
-import {brotliDecompress} from "zlib";
-import {SendMessageCreator} from "../../Redux/dialogs-reducer";
+import {ActionsType, DialogsPageType} from "../../Redux/state";
 
 type DialogsPagePropsType = DialogsPageType & {
-    dispatch: (action: AddPostActionType | ChangeNewTextActionType | UpdateMessageBodyActionType | SendMessageActionType) => void
+    dispatch: (action: ActionsType) => void
 }
 
 const Dialogs = (props: DialogsPagePropsType) => {
+    let state=props.dialogsPage
+
     let dialogsElements = props.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
     let newMessageBody = props.newMessageBody
     let messagesElements = props.messages.map(message => <MessageItem id={message.id} message={message.message}/>)
+
+
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value
-        props.dispatch({type: 'UPDATE-NEW-MESSAGE-BODY', body})
+        props.newMessageBody(body)
+        // props.dispatch({type: 'UPDATE-NEW-MESSAGE-BODY', body})
     }
     const onSendMessageClick = () => {
-        props.dispatch(SendMessageCreator())
+        props.sendMessage()
+        // dispatch(SendMessageCreator())
     }
     return (
         <div className={s.dialogs}>
