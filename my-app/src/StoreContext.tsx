@@ -1,6 +1,4 @@
 import React from "react";
-import App from "./App";
-import {store} from "./Redux/redux-store";
 import {StoreType} from "./Redux/state";
 
 

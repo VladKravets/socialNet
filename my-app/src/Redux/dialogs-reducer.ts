@@ -5,7 +5,6 @@ type DialogsInitialState = {
     dialogs: Array<DialogType>
     newMessageBody: string
 }
-
 let initialState: DialogsInitialState = {
     messages: [
         {id: 1, message: 'Hi'},
@@ -49,7 +48,7 @@ export const UpdateMessageBodyCreator = (body: string) => {
         body: body
     } as const
 }
-export const SendMessageCreator = () => {
+export const SendMessageCreator = (body:string) => {
     return {
         type: 'SEND_MESSAGE',
     } as const
