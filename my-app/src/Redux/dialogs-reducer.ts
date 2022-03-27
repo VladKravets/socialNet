@@ -32,7 +32,7 @@ export const dialogsReducer = (state = initialState, action: ActionsType) => {
             state.newMessageBody = action.body
             break;
         case 'SEND_MESSAGE':
-            let body = state.newMessageBody = ''
+            let body = state.newMessageBody
             state.messages.push({id: 6, message: body})
             break;
         default:
@@ -40,16 +40,6 @@ export const dialogsReducer = (state = initialState, action: ActionsType) => {
     }
 
     return state
-
 }
-export const UpdateMessageBodyCreator = (body: string) => {
-    return {
-        type: 'UPDATE-NEW-MESSAGE-BODY',
-        body: body
-    } as const
-}
-export const SendMessageCreator = (body:string) => {
-    return {
-        type: 'SEND_MESSAGE',
-    } as const
-}
+export const UpdateMessageBodyCreator = (body: string) => ({type: 'UPDATE-NEW-MESSAGE-BODY', body})
+export const SendMessageCreator = (newMessageBody: string) => ({type: 'UPDATE-NEW-MESSAGE-BODY', newMessageBody})
