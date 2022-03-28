@@ -26,6 +26,7 @@ const Dialogs = (props: DialogsPropsProps) => {
     }
     const onSendMessageClick = () => {
         props.sendMessage()
+        props.handeChangeMessage('')
         // dispatch(SendMessageCreator())
     }
     return (
