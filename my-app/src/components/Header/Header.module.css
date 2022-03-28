@@ -1,33 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
 .header {
     grid-area: h;
     background: -webkit-linear-gradient(308deg, #20604f,#ce2939);background: linear-gradient(308deg, #20604f,#2a8b8e,#ce2939);
     border-radius: 8px;
-    opacity: 1;
-}
-.content {
-    width: 100px;
-    height: 30px;
-    padding: 10px;
-    border-radius: 12px;
-    background: #20604f;
-    position: relative;
-    margin:5px 20px;
 }
 
-.content:after {
-    content: '';
-    width: 1.5em;
-    height: 1.5em;
-    position: absolute;
-    bottom: 0;
-}
-
-.content.left {
-    border-bottom-left-radius: 0;
-}
-
-.left::after {
-    left: 0;
-    transform: translateX(-100%);
-    background: radial-gradient(circle at 0 0, transparent, transparent 72%, #20604f 72%);
+.title{
+    font-family: 'Architects Daughter', cursive;
+    font-size: 40px;
+    margin-left: 15px;
+    text-shadow: 0 1px 0 #ccc,
+    0 2px 0 #c9c9c9,
+    0 3px 0 #bbb,
+    0 4px 0 #b9b9b9,
+    0 5px 0 #aaa,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25),
+    0 10px 10px rgba(0,0,0,.2),
+    0 20px 20px rgba(0,0,0,.15);
 }

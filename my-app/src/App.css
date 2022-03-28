@@ -1,6 +1,6 @@
 .app{
-    background: -webkit-linear-gradient(90deg, #20604f,#2a8b8e,#ce2939);
-    background: linear-gradient(90deg, #20604f,#2a8b8e,#ce2939);
+    background:  #20604f;
+    background: #20604f;
 }
 .app-wrapper {
     display: grid;
