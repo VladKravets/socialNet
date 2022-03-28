@@ -6,17 +6,23 @@ import {DialogsPageType, RootStateType} from "../../Redux/state";
 
 type DialogsPagePropsType = DialogsPageType & RootStateType
 
-const Dialogs = (props: DialogsPagePropsType) => {
+type DialogsPropsProps = {
+    dialogsPage: DialogsPageType
+    handeChangeMessage: (body:string) => void
+    sendMessage: () => void
+}
+
+const Dialogs = (props: DialogsPropsProps) => {
     let state = props.dialogsPage
 
-    let dialogsElements = props.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
-    let newMessageBody = props.newMessageBody
-    let messagesElements = props.messages.map(message => <MessageItem id={message.id} message={message.message}/>)
+    let dialogsElements = props.dialogsPage.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
+    let newMessageBody = props.dialogsPage.newMessageBody
+    let messagesElements = props.dialogsPage.messages.map(message => <MessageItem id={message.id} message={message.message}/>)
 
 
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value
-        props.newMessageBody(body)
+        props.handeChangeMessage(body)
         // props.dispatch({type: 'UPDATE-NEW-MESSAGE-BODY', body})
     }
     const onSendMessageClick = () => {

@@ -16,10 +16,10 @@ const DialogsContainer = () => {
                 const onNewMessageChange = (body:string) => {
                     store.dispatch(UpdateMessageBodyCreator(body))
                 }
-                const onSendMessageClick = (body: string) => {
-                    store.dispatch(SendMessageCreator(body))
+                const onSendMessageClick = () => {
+                    store.dispatch(SendMessageCreator())
                 }
-                return <Dialogs newMessageBody={onNewMessageChange}
+                return <Dialogs handeChangeMessage={onNewMessageChange}
                                 sendMessage={onSendMessageClick}
                                 dialogsPage={state}/>
             }

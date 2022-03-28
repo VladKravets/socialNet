@@ -5,7 +5,7 @@ import App from './App';
 import {Provider} from "./StoreContext"
 import {store} from "./Redux/redux-store";
 
-export let rerenderEntireTree = () => {
+export let rerenderEntireTree = (state: any) => {
     ReactDOM.render(
         <Provider store={store}>
             <App/>
@@ -13,7 +13,7 @@ export let rerenderEntireTree = () => {
 }
 
 
-rerenderEntireTree()
+rerenderEntireTree(store.getState())
 
 store.subscribe(() => {
     let state = store.getState()
