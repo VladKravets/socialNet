@@ -5,9 +5,9 @@ import {ActionsType, PostType} from "../../../Redux/state";
 
 type MyPostsPropsType = {
     posts: Array<PostType>
-    name: string
-    dispatch: (action: ActionsType) => void
     newPostText: string
+    updateNewPostText:(text: string)=>void
+    addPost:(value:string)=>void
 }
 
 const MyPosts: React.FC<MyPostsPropsType> = (props) => {
@@ -15,16 +15,16 @@ const MyPosts: React.FC<MyPostsPropsType> = (props) => {
                                                         likesCount={post.likesCount}/>)
 
     const addPost = () => {
-        props.addPost()
+        props.addPost(props.newPostText)
+        props.updateNewPostText('')
     }
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let text = props.newPostText.current.value
-        props.newPostText(text)
+        props.updateNewPostText(e.currentTarget.value)
     }
 
     return (
         <div className={s.postsBlock}>
-            <h3>{props.name}</h3>
+            <h3>My posts</h3>
             <div>
                 <div>
                     <textarea onChange={onPostChange}

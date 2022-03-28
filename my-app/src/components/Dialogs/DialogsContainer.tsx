@@ -1,5 +1,4 @@
-import React, {ChangeEvent} from 'react';
-import {ActionsType, DialogsPageType,} from "../../Redux/state";
+import React from 'react';
 import {SendMessageCreator, UpdateMessageBodyCreator} from "../../Redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import StoreContext from '../../StoreContext';
