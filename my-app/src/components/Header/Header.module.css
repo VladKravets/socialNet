@@ -1,9 +1,33 @@
 .header {
     grid-area: h;
-    background: -webkit-linear-gradient(308deg, #20604f,#2a8b8e,#ce2939);background: linear-gradient(308deg, #20604f,#2a8b8e,#ce2939);
+    background: -webkit-linear-gradient(308deg, #20604f,#ce2939);background: linear-gradient(308deg, #20604f,#2a8b8e,#ce2939);
     border-radius: 8px;
-    opacity: 0.9;
+    opacity: 1;
 }
-.header img{
+.content {
     width: 100px;
+    height: 30px;
+    padding: 10px;
+    border-radius: 12px;
+    background: #20604f;
+    position: relative;
+    margin:5px 20px;
+}
+
+.content:after {
+    content: '';
+    width: 1.5em;
+    height: 1.5em;
+    position: absolute;
+    bottom: 0;
+}
+
+.content.left {
+    border-bottom-left-radius: 0;
+}
+
+.left::after {
+    left: 0;
+    transform: translateX(-100%);
+    background: radial-gradient(circle at 0 0, transparent, transparent 72%, #20604f 72%);
 }
