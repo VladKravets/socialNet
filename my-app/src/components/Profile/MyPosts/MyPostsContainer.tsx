@@ -3,6 +3,7 @@ import {PostType, RootStateType, state} from "../../../Redux/state";
 import {AddPostActionCreator, ChangeNewTextActionCreator} from "../../../Redux/profile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
+import {Dispatch} from "redux";
 
 type  mapStateToPropsType={
     posts:Array<PostType>
