@@ -7,7 +7,7 @@ import {DialogsPageType} from "../../Redux/state";
 
 type DialogsPropsProps = {
     dialogsPage: DialogsPageType
-    handeChangeMessage: (body:string) => void
+    handlerChangeMessage: (body:string) => void
     sendMessage: () => void
 }
 
@@ -21,12 +21,12 @@ const Dialogs = (props: DialogsPropsProps) => {
 
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let body = e.target.value
-        props.handeChangeMessage(body)
+        props.handlerChangeMessage(body)
         // props.dispatch({type: 'UPDATE-NEW-MESSAGE-BODY', body})
     }
     const onSendMessageClick = () => {
         props.sendMessage()
-        props.handeChangeMessage('')
+        props.handlerChangeMessage('')
         // dispatch(SendMessageCreator())
     }
     return (
