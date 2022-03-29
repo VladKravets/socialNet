@@ -12,11 +12,10 @@ type DialogsPropsProps = {
 }
 
 const Dialogs = (props: DialogsPropsProps) => {
-    let state = props.dialogsPage
 
-    let dialogsElements = props.dialogsPage.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>)
+    let dialogsElements = props.dialogsPage.dialogs.map(dialog => <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>)
     let newMessageBody = props.dialogsPage.newMessageBody
-    let messagesElements = props.dialogsPage.messages.map(message => <MessageItem id={message.id} message={message.message}/>)
+    let messagesElements = props.dialogsPage.messages.map(message => <MessageItem key={message.id} id={message.id} message={message.message}/>)
 
 
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
