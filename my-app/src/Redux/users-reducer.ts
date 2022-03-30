@@ -2,6 +2,7 @@ import {ActionsType} from "./state";
 
 export type UsersType = {
     id: number
+    photoUrl: string
     followed: boolean
     fullName: string
     status: string
@@ -16,6 +17,7 @@ let initialState: UsersPageType = {
     users: [
         {
             id: 1,
+            photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Vlad_Tepes_002.jpg/1200px-Vlad_Tepes_002.jpg',
             followed: true,
             fullName: 'Vlad',
             status: 'I am a samurai',
@@ -23,6 +25,7 @@ let initialState: UsersPageType = {
         },
         {
             id: 2,
+            photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Vlad_Tepes_002.jpg/1200px-Vlad_Tepes_002.jpg',
             followed: true,
             fullName: 'Natasha',
             status: 'I am a teacher',
@@ -30,23 +33,25 @@ let initialState: UsersPageType = {
         },
         {
             id: 3,
+            photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Vlad_Tepes_002.jpg/1200px-Vlad_Tepes_002.jpg',
             followed: false,
-            fullName: 'Ritis',
+            fullName: 'Eduard',
             status: 'I am a entrepreneur',
-            location: {city: 'Vilnus', country: 'Litva'}
+            location: {city: 'Vilnius', country: 'Lithuania'}
         },
         {
             id: 4,
+            photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Vlad_Tepes_002.jpg/1200px-Vlad_Tepes_002.jpg',
             followed: false,
             fullName: 'John',
             status: 'I am a NBA-player',
-            location: {city: 'Vancuver', country: 'Canada'}
+            location: {city: 'Vancouver', country: 'Canada'}
         },
 
     ],
 }
 
-export const usersReducer = (state = initialState, action: ActionsType) => {
+export const usersReducer = (state = initialState, action: ActionsType): UsersPageType => {
     switch (action.type) {
         case 'FOLLOW':
             return {
@@ -69,13 +74,13 @@ export const usersReducer = (state = initialState, action: ActionsType) => {
                 })
             }
         case 'SET-USERS':
-            return {...state, users: [...state.users,...action.users]}
+            return {...state, users: [...state.users, ...action.users]}
         default:
             return state
     }
 }
 
 
-export const followAC = () => ({type: "FOLLOW", userID})
-export const unfolllowAC = () => ({type: 'UNFOLLOW', userID})
-export const setUsersAC = () => ({type: 'SET-USERS', users})
+export const followAC = (userID: number) => ({type: "FOLLOW", userID})
+export const unfolllowAC = (userID: number) => ({type: 'UNFOLLOW', userID})
+export const setUsersAC = (users: UsersType[]) => ({type: 'SET-USERS', users})
