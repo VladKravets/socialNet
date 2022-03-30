@@ -1,15 +1,23 @@
-import { profileReducer} from "./profile-reducer";
+import {profileReducer} from "./profile-reducer";
 import {dialogsReducer} from "./dialogs-reducer";
+import {UsersType} from "./users-reducer";
 
 // export type StoreType =Store & ReturnType<typeof reducers>
-export type ActionsType=AddPostActionType | ChangeNewTextActionType | UpdateMessageBodyActionType | SendMessageActionType
-export type StoreType ={
+export type ActionsType =
+    AddPostActionType
+    | FollowUserActionType
+    | UnfollowUserActionType
+    | ChangeNewTextActionType
+    | UpdateMessageBodyActionType
+    | SendMessageActionType
+    | SetUsersActionType
+export type StoreType = {
     _state: RootStateType
     rerenderEntireTree: () => void
     subscribe: (callback: () => void) => void
     _rerenderEntireTree: (_state: {}) => void
     getState: () => RootStateType
-    dispatch: (action:ActionsType ) => void
+    dispatch: (action: ActionsType) => void
 }
 export type AddPostActionType = {
     type: "ADD_POST"
@@ -22,10 +30,21 @@ export type ChangeNewTextActionType = {
 export type UpdateMessageBodyActionType = {
     type: 'UPDATE-NEW-MESSAGE-BODY'
     body: string
-
 }
 export type SendMessageActionType = {
     type: 'SEND_MESSAGE'
+}
+export type FollowUserActionType = {
+    type: 'FOLLOW'
+    userID: number
+}
+export type UnfollowUserActionType = {
+    type: 'UNFOLLOW'
+    userID: number
+}
+export type SetUsersActionType = {
+    type: 'SET-USERS'
+    users: UsersType[]
 }
 
 const store: StoreType = {
