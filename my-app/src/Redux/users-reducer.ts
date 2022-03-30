@@ -17,7 +17,7 @@ let initialState: UsersPageType = {
     users: [
         {
             id: 1,
-            photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Vlad_Tepes_002.jpg/1200px-Vlad_Tepes_002.jpg',
+            photoUrl: 'https://cdn3.vectorstock.com/i/1000x1000/44/12/muslim-avatar-people-flat-icon-vector-28504412.jpg',
             followed: true,
             fullName: 'Vlad',
             status: 'I am a samurai',
@@ -25,7 +25,7 @@ let initialState: UsersPageType = {
         },
         {
             id: 2,
-            photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Vlad_Tepes_002.jpg/1200px-Vlad_Tepes_002.jpg',
+            photoUrl: 'https://static.vecteezy.com/system/resources/previews/004/899/833/large_2x/beautiful-girl-with-blue-hair-avatar-of-woman-for-social-network-vector.jpg',
             followed: true,
             fullName: 'Natasha',
             status: 'I am a teacher',
@@ -33,7 +33,7 @@ let initialState: UsersPageType = {
         },
         {
             id: 3,
-            photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Vlad_Tepes_002.jpg/1200px-Vlad_Tepes_002.jpg',
+            photoUrl: 'https://img.freepik.com/free-vector/vector-illustration-boy-avatar-avatar-social-network-documents-redheaded-boy-with-freckles_469123-398.jpg',
             followed: false,
             fullName: 'Eduard',
             status: 'I am a entrepreneur',
@@ -41,7 +41,7 @@ let initialState: UsersPageType = {
         },
         {
             id: 4,
-            photoUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Vlad_Tepes_002.jpg/1200px-Vlad_Tepes_002.jpg',
+            photoUrl: 'https://img.lagaceta.com.ar/fotos/notas/2020/06/05/facebook-avatar-se-hace-tendencia-red-social-furor-entre-tucumanos-846694-105901.jpg',
             followed: false,
             fullName: 'John',
             status: 'I am a NBA-player',
