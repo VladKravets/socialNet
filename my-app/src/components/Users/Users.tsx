@@ -3,6 +3,8 @@ import s from './Users.module.css'
 import {UsersType} from "../../Redux/users-reducer";
 import axios, {AxiosResponse} from 'axios'
 import userLogo from '../../assets/images/userLogo.png'
+
+
 type UsersPropsType = {
     users: UsersType[]
     setUsers: (users: UsersType[]) => void
@@ -11,16 +13,18 @@ type UsersPropsType = {
 }
 
 export const Users: React.FC<UsersPropsType> = (props) => {
-    if (props.users.length === 0) {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users')
-            .then(response => {
-                debugger
-                props.setUsers(response.data.items)
-            })
-
+    let getUsers = () => {
+        if (props.users.length === 0) {
+            axios.get('https://social-network.samuraijs.com/api/1.0/users')
+                .then(response => {
+                    debugger
+                    props.setUsers(response.data.items)
+                })
+        }
     }
     return (
         <div>
+            <button onClick={getUsers}>GetUsers</button>
             {
                 props.users.map(user => <div key={user.id}>
                     <span>
