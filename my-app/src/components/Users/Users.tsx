@@ -12,37 +12,40 @@ type UsersPropsType = {
     follow: (userID: number) => void
 }
 
-export const Users: React.FC<UsersPropsType> = (props) => {
-    let getUsers = () => {
-        if (props.users.length === 0) {
-            axios.get('https://social-network.samuraijs.com/api/1.0/users')
-                .then(response => {
-                    debugger
-                    props.setUsers(response.data.items)
-                })
-        }
+export class Users extends React.Component<UsersPropsType> {
+
+    constructor(props: UsersPropsType) {
+        super(props);
+        axios.get('https://social-network.samuraijs.com/api/1.0/users')
+            .then(response => {
+                this.props.setUsers(response.data.items)
+            })
     }
-    return (
-        <div>
-            <button onClick={getUsers}>GetUsers</button>
-            {
-                props.users.map(user => <div key={user.id}>
+
+    render() {
+        return (
+            <div>
+                {
+                    this.props.users.map(user => <div key={user.id}>
                     <span>
                         <div>
-                            <img className={s.photo} src={user.photos.small != null ? user.photos.small : userLogo}
+                            <img className={s.photo}
+                                 src={user.photos.small != null
+                                     ? user.photos.small
+                                     : userLogo}
                                  alt="logo"/>
                         </div>
                         <div>
                             {user.followed
                                 ? <button onClick={() => {
-                                    props.unfollow(user.id)
+                                    this.props.unfollow(user.id)
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
-                                    props.follow(user.id)
+                                    this.props.follow(user.id)
                                 }}>Follow</button>}
                         </div>
                     </span>
-                    <span>
+                        <span>
                         <span>
                             <div>{user.name}</div>
                             <div>{user.status}</div>
@@ -52,9 +55,9 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                             <div>{'user.location.city'}</div>
                         </span>
                     </span>
-                </div>)
-            }
-        </div>
-    );
-};
-
+                    </div>)
+                }
+            </div>
+        );
+    }
+}
