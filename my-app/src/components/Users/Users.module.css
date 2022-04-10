@@ -2,3 +2,19 @@
     width: 70px;
     border-radius: 50%;
 }
+.numbersPage{
+    font-size: 30px;
+    color: black;
+
+}
+.selected {
+    font-weight: bold;
+    cursor: pointer;
+
+}
+.pagination{
+    margin: 5px;
+}
+.numbersPage:hover{
+cursor: pointer;
+}

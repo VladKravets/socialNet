@@ -40,7 +40,7 @@ export class Users extends React.Component<UsersPropsType> {
         let pages = []
         for (let i = 1; i <= pageCount; i++) {
             pages.push(i)
-            if (i === 20) break;
+            if (i === 15) break;
         }
 
         return (
@@ -49,7 +49,7 @@ export class Users extends React.Component<UsersPropsType> {
                     {pages.map((page, index) => {
                         return (
                             <span key={index + 1}
-                                  className={this.props.currentPage === page ? s.selected : ''}
+                                  className={this.props.currentPage === page ? s.selected : s.pagination}
                                   onClick={(e) => {
                                       this.onPageChanged(page)
                                   }}>
