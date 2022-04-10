@@ -5,12 +5,10 @@ import {UsersType} from "./users-reducer";
 // export type StoreType =Store & ReturnType<typeof reducers>
 export type ActionsType =
     AddPostActionType
-    | FollowUserActionType
-    | UnfollowUserActionType
     | ChangeNewTextActionType
     | UpdateMessageBodyActionType
     | SendMessageActionType
-    | SetUsersActionType
+
 export type StoreType = {
     _state: RootStateType
     rerenderEntireTree: () => void
@@ -34,18 +32,7 @@ export type UpdateMessageBodyActionType = {
 export type SendMessageActionType = {
     type: 'SEND_MESSAGE'
 }
-export type FollowUserActionType = {
-    type: 'FOLLOW'
-    userID: number
-}
-export type UnfollowUserActionType = {
-    type: 'UNFOLLOW'
-    userID: number
-}
-export type SetUsersActionType = {
-    type: 'SET-USERS'
-    users: UsersType[]
-}
+
 
 const store: StoreType = {
     _state: {
