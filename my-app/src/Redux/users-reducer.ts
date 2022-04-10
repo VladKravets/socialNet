@@ -52,9 +52,8 @@ export type UsersPageType = {
 let initialState: UsersPageType = {
     users: [],
     pageSize: 5,
-    totalUsersCount: 25,
-    currentPageSize: 1,
-
+    totalUsersCount: 0,
+    currentPageSize: 5,
 }
 
 export const usersReducer = (state = initialState, action: UsersReducerType): UsersPageType => {
