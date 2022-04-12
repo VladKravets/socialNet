@@ -1,4 +1,4 @@
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {RootStateType} from "../../Redux/redux-store";
 import {Dispatch} from "redux";
 import {
@@ -12,6 +12,7 @@ import {
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
+import {Prealoader} from "../../common/Prealoder/Prealoader";
 
 type MapStateToPropsType = {
     users: UsersType[]
@@ -20,14 +21,13 @@ type MapStateToPropsType = {
     currentPage: number
     isLoading: boolean
 }
-
 type MapStateToDispatchType = {
     follow: (userID: number) => void
     unfollow: (userID: number) => void
     setUsers: (users: UsersType[]) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
-    setLoading:(isLoading:boolean)=>void
+    setLoading: (isLoading: boolean) => void
 
 }
 type UsersPropsType = {
@@ -37,41 +37,49 @@ type UsersPropsType = {
     follow: (userID: number) => void
     totalUsersCount: number
     pageSize: number
+    isLoading: boolean
     currentPage: number
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
+    setLoading: (isLoading: boolean) => void
 }
 
 export class UsersCont extends React.Component<UsersPropsType> {
     componentDidMount() {
+        this.props.setLoading(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}}`)
             .then(response => {
                 this.props.setUsers(response.data.items)
                 this.props.setTotalUsersCount(response.data.totalCount)
+                this.props.setLoading(false)
             })
     }
 
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
+        this.props.setLoading(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}}`)
             .then(response => {
                 this.props.setUsers(response.data.items)
+                this.props.setLoading(false)
             })
     }
 
     render() {
-        return <Users
-            users={this.props.users}
-            onPageChanged={this.onPageChanged}
-            setUsers={this.props.setUsers}
-            unfollow={this.props.unfollow}
-            follow={this.props.follow}
-            totalUsersCount={this.props.totalUsersCount}
-            pageSize={this.props.pageSize}
-            currentPage={this.props.currentPage}
-            setCurrentPage={this.props.setCurrentPage}
-            setTotalUsersCount={this.props.setTotalUsersCount}/>
-
+        return <>
+            {this.props.isLoading?<Prealoader/>:''}
+            <Users
+                users={this.props.users}
+                onPageChanged={this.onPageChanged}
+                setUsers={this.props.setUsers}
+                unfollow={this.props.unfollow}
+                follow={this.props.follow}
+                totalUsersCount={this.props.totalUsersCount}
+                pageSize={this.props.pageSize}
+                currentPage={this.props.currentPage}
+                setCurrentPage={this.props.setCurrentPage}
+                setTotalUsersCount={this.props.setTotalUsersCount}/>
+        </>
     }
 }
 
@@ -101,7 +109,7 @@ let mapStateToDispatch = (dispatch: Dispatch): MapStateToDispatchType => {
         setTotalUsersCount: (totalUsersCount: number) => {
             dispatch(setUsersTotalCountAC(totalUsersCount))
         },
-        setLoading:(isLoading:boolean)=>{
+        setLoading: (isLoading: boolean) => {
             dispatch(setLoadingAC(isLoading))
         }
     }
