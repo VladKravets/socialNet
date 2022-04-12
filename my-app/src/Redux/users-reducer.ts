@@ -26,6 +26,10 @@ export type SetUserTotalCountActionType = {
     type: 'SET-USERS-TOTAL-COUNT',
     totalUsersCount: number
 }
+export type SetIsLoadingActionType = {
+    type: 'SET-LOADING',
+    isLoading: boolean
+}
 
 export type UsersReducerType =
     FollowUserActionType
@@ -33,6 +37,7 @@ export type UsersReducerType =
     | SetUsersActionType
     | SetCurrentPageActionType
     | SetUserTotalCountActionType
+    | SetIsLoadingActionType
 export type UsersType = {
     id: number
     photos: PhotosType
@@ -47,6 +52,7 @@ export type UsersPageType = {
     pageSize: number
     totalUsersCount: number
     currentPageSize: number
+    isLoading:boolean
 }
 
 let initialState: UsersPageType = {
@@ -54,6 +60,7 @@ let initialState: UsersPageType = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPageSize: 5,
+    isLoading:false,
 }
 
 export const usersReducer = (state = initialState, action: UsersReducerType): UsersPageType => {
@@ -84,6 +91,8 @@ export const usersReducer = (state = initialState, action: UsersReducerType): Us
             return {...state, currentPageSize: action.currentPage}
         case 'SET-USERS-TOTAL-COUNT':
             return {...state, totalUsersCount: action.totalUsersCount}
+        case 'SET-LOADING':
+            return {...state, isLoading: action.isLoading}
         default:
             return state
     }
@@ -95,3 +104,4 @@ export const unfolllowAC = (userID: number) => ({type: 'UNFOLLOW', userID})
 export const setUsersAC = (users: UsersType[]) => ({type: 'SET-USERS', users})
 export const setCurrentPageAC = (currentPage: number) => ({type: 'SET-CURRENT-PAGE', currentPage})
 export const setUsersTotalCountAC = (totalUsersCount: number) => ({type: 'SET-USERS-TOTAL-COUNT', totalUsersCount})
+export const setLoadingAC = (isLoading: boolean) => ({type: 'SET-LOADING', isLoading})

@@ -7,7 +7,7 @@ import {
     setCurrentPageAC,
     setUsersTotalCountAC,
     unfolllowAC,
-    UsersType
+    UsersType, setLoadingAC
 } from "../../Redux/users-reducer";
 import React from "react";
 import axios from "axios";
@@ -18,6 +18,7 @@ type MapStateToPropsType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isLoading: boolean
 }
 
 type MapStateToDispatchType = {
@@ -26,6 +27,8 @@ type MapStateToDispatchType = {
     setUsers: (users: UsersType[]) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
+    setLoading:(isLoading:boolean)=>void
+
 }
 type UsersPropsType = {
     users: UsersType[]
@@ -78,6 +81,7 @@ let mapStateToProps = (state: RootStateType): MapStateToPropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPageSize,
+        isLoading: state.usersPage.isLoading
     }
 }
 let mapStateToDispatch = (dispatch: Dispatch): MapStateToDispatchType => {
@@ -97,6 +101,9 @@ let mapStateToDispatch = (dispatch: Dispatch): MapStateToDispatchType => {
         setTotalUsersCount: (totalUsersCount: number) => {
             dispatch(setUsersTotalCountAC(totalUsersCount))
         },
+        setLoading:(isLoading:boolean)=>{
+            dispatch(setLoadingAC(isLoading))
+        }
     }
 }
 
