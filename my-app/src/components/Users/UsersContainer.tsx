@@ -1,47 +1,16 @@
 import {connect} from "react-redux";
 import {RootStateType} from "../../Redux/redux-store";
 import {
-    follow,
-    setUsers,
-    setCurrentPage,
-    setUsersTotalCount,
-    unfolllow,
-    UsersType, setLoading
+    follow,unfollow,
+    setUsers, setCurrentPage, setTotalUsersCount,setLoading,
+    UsersType,
 } from "../../Redux/users-reducer";
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
 import {Prealoader} from "../../common/Prealoder/Prealoader";
 
-export type MapStateToPropsType = {
-    users: UsersType[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isLoading: boolean
-}
-export type MapDispatchToPropsType = {
-    follow: (userID: number) => void
-    unfollow: (userID: number) => void
-    setUsers: (users: Array<UsersType>) => void
-    setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalUsersCount: number) => void
-    setLoading: (isFetching: boolean) => void
-}
-export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
-// type UsersPropsType = {
-//     users: UsersType[]
-//     setUsers: (users: UsersType[]) => void
-//     unfollow: (userID: number) => void
-//     follow: (userID: number) => void
-//     totalUsersCount: number
-//     pageSize: number
-//     isLoading: boolean
-//     currentPage: number
-//     setCurrentPage: (currentPage: number) => void
-//     setTotalUsersCount: (totalUsersCount: number) => void
-//     setLoading: (isLoading: boolean) => void
-// }
+
 
 export class UsersCont extends React.Component<UsersPropsType> {
     componentDidMount() {
@@ -70,17 +39,33 @@ export class UsersCont extends React.Component<UsersPropsType> {
             <Users
                 users={this.props.users}
                 onPageChanged={this.onPageChanged}
-                setUsers={this.props.setUsers}
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
-                setCurrentPage={this.props.setCurrentPage}
-                setTotalUsersCount={this.props.setTotalUsersCount}/>
+                />
         </>
     }
 }
+
+
+export type MapStateToPropsType = {
+    users: UsersType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isLoading: boolean
+}
+export type MapDispatchToPropsType = {
+    follow: (userID: number) => void
+    unfollow: (userID: number) => void
+    setUsers: (users: UsersType[]) => void
+    setCurrentPage: (currentPage: number) => void
+    setTotalUsersCount: (totalUsersCount: number) => void
+    setLoading: (isLoading: boolean) => void
+}
+export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 let mapStateToProps = (state: RootStateType): MapStateToPropsType => {
     return {
@@ -115,4 +100,4 @@ let mapStateToProps = (state: RootStateType): MapStateToPropsType => {
 // }
 
 
-export default connect(mapStateToProps,{follow,unfolllow,setUsers,setCurrentPage,setUsersTotalCount,setLoading})(UsersCont)
+export default connect(mapStateToProps,{follow,unfollow,setUsers,setCurrentPage,setTotalUsersCount,setLoading})(UsersCont)

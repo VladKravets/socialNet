@@ -6,14 +6,11 @@ import userLogo from '../../assets/images/userLogo.png'
 
 type UsersPropsType = {
     users: UsersType[]
-    setUsers: (users: UsersType[]) => void
     unfollow: (userID: number) => void
     follow: (userID: number) => void
     totalUsersCount: number
     pageSize: number
     currentPage: number
-    setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalUsersCount: number) => void
     onPageChanged: (pageNumber: number) => void
 }
 
