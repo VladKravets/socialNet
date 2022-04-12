@@ -1,48 +1,47 @@
-import {connect, Provider} from "react-redux";
+import {connect} from "react-redux";
 import {RootStateType} from "../../Redux/redux-store";
-import {Dispatch} from "redux";
 import {
-    followAC,
-    setUsersAC,
-    setCurrentPageAC,
-    setUsersTotalCountAC,
-    unfolllowAC,
-    UsersType, setLoadingAC
+    follow,
+    setUsers,
+    setCurrentPage,
+    setUsersTotalCount,
+    unfolllow,
+    UsersType, setLoading
 } from "../../Redux/users-reducer";
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
 import {Prealoader} from "../../common/Prealoder/Prealoader";
 
-type MapStateToPropsType = {
+export type MapStateToPropsType = {
     users: UsersType[]
     pageSize: number
     totalUsersCount: number
     currentPage: number
     isLoading: boolean
 }
-type MapStateToDispatchType = {
+export type MapDispatchToPropsType = {
     follow: (userID: number) => void
     unfollow: (userID: number) => void
-    setUsers: (users: UsersType[]) => void
+    setUsers: (users: Array<UsersType>) => void
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
-    setLoading: (isLoading: boolean) => void
-
+    setLoading: (isFetching: boolean) => void
 }
-type UsersPropsType = {
-    users: UsersType[]
-    setUsers: (users: UsersType[]) => void
-    unfollow: (userID: number) => void
-    follow: (userID: number) => void
-    totalUsersCount: number
-    pageSize: number
-    isLoading: boolean
-    currentPage: number
-    setCurrentPage: (currentPage: number) => void
-    setTotalUsersCount: (totalUsersCount: number) => void
-    setLoading: (isLoading: boolean) => void
-}
+export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
+// type UsersPropsType = {
+//     users: UsersType[]
+//     setUsers: (users: UsersType[]) => void
+//     unfollow: (userID: number) => void
+//     follow: (userID: number) => void
+//     totalUsersCount: number
+//     pageSize: number
+//     isLoading: boolean
+//     currentPage: number
+//     setCurrentPage: (currentPage: number) => void
+//     setTotalUsersCount: (totalUsersCount: number) => void
+//     setLoading: (isLoading: boolean) => void
+// }
 
 export class UsersCont extends React.Component<UsersPropsType> {
     componentDidMount() {
@@ -92,28 +91,28 @@ let mapStateToProps = (state: RootStateType): MapStateToPropsType => {
         isLoading: state.usersPage.isLoading
     }
 }
-let mapStateToDispatch = (dispatch: Dispatch): MapStateToDispatchType => {
-    return {
-        follow: (userID) => {
-            dispatch(followAC(userID))
-        },
-        unfollow: (userID) => {
-            dispatch(unfolllowAC(userID))
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (currentPage) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setTotalUsersCount: (totalUsersCount: number) => {
-            dispatch(setUsersTotalCountAC(totalUsersCount))
-        },
-        setLoading: (isLoading: boolean) => {
-            dispatch(setLoadingAC(isLoading))
-        }
-    }
-}
+// let mapStateToDispatch = (dispatch: Dispatch): MapStateToDispatchType => {
+//     return {
+//         follow: (userID) => {
+//             dispatch(followAC(userID))
+//         },
+//         unfollow: (userID) => {
+//             dispatch(unfolllowAC(userID))
+//         },
+//         setUsers: (users) => {
+//             dispatch(setUsersAC(users))
+//         },
+//         setCurrentPage: (currentPage) => {
+//             dispatch(setCurrentPageAC(currentPage))
+//         },
+//         setTotalUsersCount: (totalUsersCount: number) => {
+//             dispatch(setUsersTotalCountAC(totalUsersCount))
+//         },
+//         setLoading: (isLoading: boolean) => {
+//             dispatch(setLoadingAC(isLoading))
+//         }
+//     }
+// }
 
 
-export default connect(mapStateToProps, mapStateToDispatch)(UsersCont)
+export default connect(mapStateToProps,{follow,unfolllow,setUsers,setCurrentPage,setUsersTotalCount,setLoading})(UsersCont)
