@@ -37,6 +37,11 @@ export const profileReducer = (state = initialState, action: ActionsType) => {
                 ...state,
                 newPostText: action.newText
             }
+        case 'SET-USER-PROFILE':
+            return {
+                ...state,
+                profile: action.profile
+            }
         default:
             return state
     }
@@ -53,5 +58,11 @@ export const ChangeNewTextActionCreator = (newText: string) => {
     return {
         type: 'UPDATE-NEW-POST-TEXT',
         newText: newText
+    } as const
+}
+export const setUserProfile = (profile: string) => {
+    return {
+        type: 'SET-USER-PROFILE',
+        profile,
     } as const
 }
