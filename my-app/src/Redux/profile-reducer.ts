@@ -3,11 +3,31 @@ import {ActionsType} from "./state";
 type ProfilePageType = {
     posts: PostsType[]
     newPostText: string
+    profile:null
 }
 export type PostsType = {
     id: number
     message: string
     likesCount: number
+}
+type ContactsType = {
+    facebook: string
+    website: string
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: string
+    github: string
+    mainLink: string
+}
+export type ProfileResponseType = {
+    aboutMe: string
+    contacts: ContactsType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: {small: string, large: string}
 }
 
 let initialState: ProfilePageType = {
@@ -16,7 +36,8 @@ let initialState: ProfilePageType = {
         {id: 2, message: 'How are you?', likesCount: 491},
         {id: 3, message: "I'm a ninja", likesCount: 31},
     ],
-    newPostText: ''
+    newPostText: '',
+    profile:null
 }
 
 export const profileReducer = (state = initialState, action: ActionsType) => {
@@ -60,7 +81,7 @@ export const ChangeNewTextActionCreator = (newText: string) => {
         newText: newText
     } as const
 }
-export const setUserProfile = (profile: string) => {
+export const setUserProfile = (profile: null) => {
     return {
         type: 'SET-USER-PROFILE',
         profile,
