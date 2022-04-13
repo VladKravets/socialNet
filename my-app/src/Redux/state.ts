@@ -8,7 +8,12 @@ export type ActionsType =
     | ChangeNewTextActionType
     | UpdateMessageBodyActionType
     | SendMessageActionType
+    | SetUserProfileType
 
+export type SetUserProfileType = {
+    type: 'SET-USER-PROFILE',
+    profile: null
+}
 export type StoreType = {
     _state: RootStateType
     rerenderEntireTree: () => void
@@ -42,7 +47,8 @@ const store: StoreType = {
                 {id: 2, message: 'How are you?', likesCount: 491},
                 {id: 3, message: "I'm a ninja", likesCount: 31},
             ],
-            newPostText: ''
+            newPostText: '',
+            profile:null
         },
         dialogsPage: {
             messages: [
@@ -101,6 +107,7 @@ export type PostType = {
 export type ProfilePageType = {
     newPostText: string
     posts: Array<PostType>
+    profile:null
 
 }
 export type DialogsPageType = {
@@ -120,7 +127,8 @@ export let state: RootStateType = {
             {id: 2, message: 'How are you?', likesCount: 491},
             {id: 3, message: 'I\'m\ a ninja', likesCount: 31},
         ],
-        newPostText: ''
+        newPostText: '',
+        profile:null
     },
     dialogsPage: {
         messages: [
