@@ -1,4 +1,5 @@
 import axios from "axios";
+import {UsersType} from "../Redux/users-reducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -12,6 +13,12 @@ export const usersAPI = {
     getUsers(currentPage: number, pageSize: number) {
         return instance.get(`users?page=${currentPage}&count=${pageSize}}`)
             .then(responce => {
+                return responce.data
+            })
+    },
+    deleteUsers(user: UsersType) {
+        return instance.delete(`follow/${user.id}`)
+            .then(responce=>{
                 return responce.data
             })
     }

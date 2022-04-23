@@ -4,6 +4,7 @@ import {UsersType} from "../../Redux/users-reducer";
 import userLogo from '../../assets/images/userLogo.png'
 import {NavLink} from "react-router-dom";
 import axios from "axios";
+import {usersAPI} from "../../API/Api";
 
 
 type UsersPropsType = {
@@ -60,29 +61,21 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                         <div>
                             {user.followed
                                 ? <button onClick={() => {
-                                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {
-                                            withCredentials: true,
-                                        headers:{
-                                                "API-KEY":"3bb1f301-4343-478c-bd6d-e432168f19d7"
-                                        }
-                                        }
-                                    )
-                                        .then((response) => {
-                                            if (response.data.resultCode === 0) {
+                                    usersAPI.deleteUsers(user)
+                                        .then((data) => {
+                                            if (data.resultCode === 0) {
                                                 props.unfollow(user.id)
 
                                             }
                                         })
-
-
                                 }}>Unfollow</button>
                                 : <button onClick={() => {
 
                                     axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${user.id}`, {}, {
                                             withCredentials: true,
-                                        headers:{
-                                            "API-KEY":"3bb1f301-4343-478c-bd6d-e432168f19d7"
-                                        }
+                                            headers: {
+                                                "API-KEY": "3bb1f301-4343-478c-bd6d-e432168f19d7"
+                                            }
                                         }
                                     )
                                         .then(response => {

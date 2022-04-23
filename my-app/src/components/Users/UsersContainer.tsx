@@ -6,7 +6,6 @@ import {
     UsersType,
 } from "../../Redux/users-reducer";
 import React from "react";
-import axios from "axios";
 import {Users} from "./Users";
 import {Prealoader} from "../../common/Prealoder/Prealoader";
 import {usersAPI} from "../../API/Api";
@@ -16,7 +15,7 @@ export class UsersCont extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.setLoading(true)
         usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then(data => {
+            .then((data) => {
                 this.props.setUsers(data.items)
                 this.props.setTotalUsersCount(data.totalCount)
                 this.props.setLoading(false)
@@ -27,7 +26,7 @@ export class UsersCont extends React.Component<UsersPropsType> {
         this.props.setCurrentPage(pageNumber)
         this.props.setLoading(true)
         usersAPI.getUsers(pageNumber, this.props.pageSize)
-            .then(data => {
+            .then((data) => {
                 this.props.setUsers(data.items)
                 this.props.setLoading(false)
             })
