@@ -20,7 +20,7 @@ const ProfileInfo: React.FC<ProfileInfoType> = (props) => {
                     alt=""/>
             </div>
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large}/>
+                <img src={props.profile.photos.large}alt={'user logo'}/>
                 <div>About me:{props.profile.aboutMe}</div>
                 <hr/>
                 ava+description
