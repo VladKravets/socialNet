@@ -67,7 +67,7 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                                         }
                                         }
                                     )
-                                        .then(response => {
+                                        .then((response) => {
                                             if (response.data.resultCode === 0) {
                                                 props.unfollow(user.id)
 

@@ -1,26 +1,24 @@
 import {connect} from "react-redux";
 import {RootStateType} from "../../Redux/redux-store";
 import {
-    follow,unfollow,
-    setUsers, setCurrentPage, setTotalUsersCount,setLoading,
+    follow, unfollow,
+    setUsers, setCurrentPage, setTotalUsersCount, setLoading,
     UsersType,
 } from "../../Redux/users-reducer";
 import React from "react";
 import axios from "axios";
 import {Users} from "./Users";
 import {Prealoader} from "../../common/Prealoder/Prealoader";
-
+import {usersAPI} from "../../API/Api";
 
 
 export class UsersCont extends React.Component<UsersPropsType> {
     componentDidMount() {
         this.props.setLoading(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}}`,{
-            withCredentials:true
-        })
-            .then(response => {
-                this.props.setUsers(response.data.items)
-                this.props.setTotalUsersCount(response.data.totalCount)
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.setUsers(data.items)
+                this.props.setTotalUsersCount(data.totalCount)
                 this.props.setLoading(false)
             })
     }
@@ -28,18 +26,16 @@ export class UsersCont extends React.Component<UsersPropsType> {
     onPageChanged = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
         this.props.setLoading(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}}`,{
-            withCredentials:true
-        })
-            .then(response => {
-                this.props.setUsers(response.data.items)
+        usersAPI.getUsers(pageNumber, this.props.pageSize)
+            .then(data => {
+                this.props.setUsers(data.items)
                 this.props.setLoading(false)
             })
     }
 
     render() {
         return <>
-            {this.props.isLoading?<Prealoader/>:''}
+            {this.props.isLoading ? <Prealoader/> : ''}
             <Users
                 users={this.props.users}
                 onPageChanged={this.onPageChanged}
@@ -48,7 +44,7 @@ export class UsersCont extends React.Component<UsersPropsType> {
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
-                />
+            />
         </>
     }
 }
@@ -104,4 +100,11 @@ let mapStateToProps = (state: RootStateType): MapStateToPropsType => {
 // }
 
 
-export default connect(mapStateToProps,{follow,unfollow,setUsers,setCurrentPage,setTotalUsersCount,setLoading})(UsersCont)
+export default connect(mapStateToProps, {
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    setLoading
+})(UsersCont)
