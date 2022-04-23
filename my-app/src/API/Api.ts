@@ -38,3 +38,11 @@ export const authAPI = {
     }
 
 }
+export const profileAPI={
+    getShowProfile(userID:number){
+        return instance.get(`profile/`+ userID)
+            .then(responce => {
+                return responce.data
+            })
+    }
+}
