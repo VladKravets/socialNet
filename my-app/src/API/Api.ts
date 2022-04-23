@@ -18,14 +18,23 @@ export const usersAPI = {
     },
     deleteUsers(user: UsersType) {
         return instance.delete(`follow/${user.id}`)
-            .then(responce=>{
+            .then(responce => {
                 return responce.data
             })
     },
     postUsers(user: UsersType) {
         return instance.post(`follow/${user.id}`)
-            .then(responce=>{
+            .then(responce => {
                 return responce.data
             })
     }
+}
+export const authAPI = {
+    authGet() {
+        return instance.get(`auth/me`)
+            .then(responce => {
+                return responce.data
+            })
+    }
+
 }
