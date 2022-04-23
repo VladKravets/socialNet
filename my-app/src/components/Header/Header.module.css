@@ -3,6 +3,8 @@
     grid-area: h;
     background: -webkit-linear-gradient(308deg, #20604f,#ce2939);background: linear-gradient(308deg, #20604f,#2a8b8e,#ce2939);
     border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .title{
@@ -23,7 +25,9 @@
     0 20px 20px rgba(0,0,0,.15);
 }
 .loginBlock{
-    float: right;
+    margin: 15px;
+    font-size: 18px;
+    color: #d2cd90;
 }
 .loginBlock a{
     color: #ffffff;
