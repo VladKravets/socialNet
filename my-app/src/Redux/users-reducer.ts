@@ -1,3 +1,5 @@
+import {usersAPI} from "../API/Api";
+
 export type PhotosType = {
     small: string
     large: string
@@ -33,7 +35,7 @@ export type SetIsLoadingActionType = {
 export type ToogleInFollowingProgress = {
     type: 'TOGGLE-IN_FOLLOWING-PROCESS',
     followingInProgress: [],
-    userId:number
+    userId: number
     isFetching: boolean
 }
 export type UsersReducerType =
@@ -105,8 +107,8 @@ export const usersReducer = (state = initialState, action: UsersReducerType): Us
             return {
                 ...state,
                 followingInProgress: action.isFetching
-                ?[...state.followingInProgress,action.userId]
-                    :state.followingInProgress.filter(el=>el!==action.userId)
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter(el => el !== action.userId)
             }
         default:
             return state
@@ -120,4 +122,22 @@ export const setUsers = (users: UsersType[]) => ({type: 'SET-USERS', users})
 export const setCurrentPage = (currentPage: number) => ({type: 'SET-CURRENT-PAGE', currentPage})
 export const setTotalUsersCount = (totalUsersCount: number) => ({type: 'SET-USERS-TOTAL-COUNT', totalUsersCount})
 export const setLoading = (isLoading: boolean) => ({type: 'SET-LOADING', isLoading})
-export const setToggleFollowingProgress = (isFetching: boolean,userId:number) => ({type: 'TOGGLE-IN_FOLLOWING-PROCESS', isFetching,userId}as const)
+export const setToggleFollowingProgress = (isFetching: boolean, userId: number) => ({
+    type: 'TOGGLE-IN_FOLLOWING-PROCESS',
+    isFetching,
+    userId
+} as const)
+
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+
+    return (dispatch) => {
+        dispatch(setLoading(true))
+        usersAPI.getUsers(currentPage, pageSize)
+            .then((data) => {
+                dispatch(setUsers(data.items))
+                dispatch(setTotalUsersCount(data.totalCount))
+                dispatch(setLoading(false))
+            })
+    }
+}
