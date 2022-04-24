@@ -30,7 +30,11 @@ export type SetIsLoadingActionType = {
     type: 'SET-LOADING',
     isLoading: boolean
 }
-
+export type ToogleInFollowingProgress = {
+    type: 'TOGGLE-IN_FOLLOWING-PROCESS',
+    followingInProgress: [],
+    userId:number
+}
 export type UsersReducerType =
     FollowUserActionType
     | UnfollowUserActionType
@@ -38,6 +42,7 @@ export type UsersReducerType =
     | SetCurrentPageActionType
     | SetUserTotalCountActionType
     | SetIsLoadingActionType
+    | ToogleInFollowingProgress
 export type UsersType = {
     id: number
     photos: PhotosType
@@ -52,7 +57,8 @@ export type UsersPageType = {
     pageSize: number
     totalUsersCount: number
     currentPageSize: number
-    isLoading:boolean
+    isLoading: boolean
+    followingInProgress: Array<number>
 }
 
 let initialState: UsersPageType = {
@@ -60,7 +66,8 @@ let initialState: UsersPageType = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPageSize: 5,
-    isLoading:false,
+    isLoading: false,
+    followingInProgress: []
 }
 
 export const usersReducer = (state = initialState, action: UsersReducerType): UsersPageType => {
@@ -93,6 +100,13 @@ export const usersReducer = (state = initialState, action: UsersReducerType): Us
             return {...state, totalUsersCount: action.totalUsersCount}
         case 'SET-LOADING':
             return {...state, isLoading: action.isLoading}
+        case 'TOGGLE-IN_FOLLOWING-PROCESS':
+            return {
+                ...state,
+                followingInProgress: action.followingInProgress
+                ?[...state.followingInProgress,action.userId]
+                    :state.followingInProgress.filter(el=>el!=action.userId)
+            }
         default:
             return state
     }
@@ -105,3 +119,4 @@ export const setUsers = (users: UsersType[]) => ({type: 'SET-USERS', users})
 export const setCurrentPage = (currentPage: number) => ({type: 'SET-CURRENT-PAGE', currentPage})
 export const setTotalUsersCount = (totalUsersCount: number) => ({type: 'SET-USERS-TOTAL-COUNT', totalUsersCount})
 export const setLoading = (isLoading: boolean) => ({type: 'SET-LOADING', isLoading})
+export const setToggleFollowingProgress = (isFetching: boolean,userId:number) => ({type: 'TOGGLE-IN_FOLLOWING-PROCESS', isFetching,userId}as const)
