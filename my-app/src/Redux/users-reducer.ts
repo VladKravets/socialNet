@@ -34,6 +34,7 @@ export type ToogleInFollowingProgress = {
     type: 'TOGGLE-IN_FOLLOWING-PROCESS',
     followingInProgress: [],
     userId:number
+    isFetching: boolean
 }
 export type UsersReducerType =
     FollowUserActionType
@@ -103,9 +104,9 @@ export const usersReducer = (state = initialState, action: UsersReducerType): Us
         case 'TOGGLE-IN_FOLLOWING-PROCESS':
             return {
                 ...state,
-                followingInProgress: action.followingInProgress
+                followingInProgress: action.isFetching
                 ?[...state.followingInProgress,action.userId]
-                    :state.followingInProgress.filter(el=>el!=action.userId)
+                    :state.followingInProgress.filter(el=>el!==action.userId)
             }
         default:
             return state

@@ -3,7 +3,7 @@ import {RootStateType} from "../../Redux/redux-store";
 import {
     follow, unfollow,
     setUsers, setCurrentPage, setTotalUsersCount, setLoading,
-    UsersType,
+    UsersType, setToggleFollowingProgress,
 } from "../../Redux/users-reducer";
 import React from "react";
 import {Users} from "./Users";
@@ -43,11 +43,12 @@ export class UsersCont extends React.Component<UsersPropsType> {
                 totalUsersCount={this.props.totalUsersCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
+                followingInProgress={this.props.followingInProgress}
+                setToggleFollowingProgress ={this.props.setToggleFollowingProgress}
             />
         </>
     }
 }
-
 
 export type MapStateToPropsType = {
     users: UsersType[]
@@ -55,6 +56,7 @@ export type MapStateToPropsType = {
     totalUsersCount: number
     currentPage: number
     isLoading: boolean
+    followingInProgress: Array<number>
 }
 export type MapDispatchToPropsType = {
     follow: (userID: number) => void
@@ -63,6 +65,7 @@ export type MapDispatchToPropsType = {
     setCurrentPage: (currentPage: number) => void
     setTotalUsersCount: (totalUsersCount: number) => void
     setLoading: (isLoading: boolean) => void
+    setToggleFollowingProgress: (isFetching: boolean, userId: number) => void
 }
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
@@ -72,7 +75,8 @@ let mapStateToProps = (state: RootStateType): MapStateToPropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPageSize,
-        isLoading: state.usersPage.isLoading
+        isLoading: state.usersPage.isLoading,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 // let mapStateToDispatch = (dispatch: Dispatch): MapStateToDispatchType => {
@@ -105,5 +109,6 @@ export default connect(mapStateToProps, {
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
-    setLoading
+    setLoading,
+    setToggleFollowingProgress
 })(UsersCont)
