@@ -65,7 +65,7 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                                 ? <button disabled={props.followingInProgress.some(id=>id===user.id)}
                                           onClick={() => {
                                               props.setToggleFollowingProgress(true,user.id)
-                                    usersAPI.deleteUsers(user)
+                                    usersAPI.unfollowUsers(user)
                                         .then((data) => {
                                             if (data.resultCode === 0) {
                                                 props.unfollow(user.id)
@@ -75,7 +75,7 @@ export const Users: React.FC<UsersPropsType> = (props) => {
                                 }}>Unfollow</button>
                                 : <button disabled={props.followingInProgress.some(id=>id===user.id)} onClick={() => {
                                     props.setToggleFollowingProgress(true,user.id)
-                                    usersAPI.postUsers(user)
+                                    usersAPI.followUsers(user)
                                         .then((data) => {
                                             if (data.resultCode === 0) {
                                                 props.follow(user.id)
