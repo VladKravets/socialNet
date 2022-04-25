@@ -1,9 +1,20 @@
-import {ActionsType} from "./state";
+import {ProfileActionsType} from "./state";
+import {ThunkAction} from "redux-thunk";
+import {
+    setCurrentPage,
+    setLoading, setTotalUsersCount,
+    setUsers,
+    ThunkUsersType,
+    UsersPageStateType,
+    UsersReducerActionsType
+} from "./users-reducer";
+import {Dispatch} from "redux";
+import {profileAPI, usersAPI} from "../API/Api";
 
-type ProfilePageType = {
+type ProfilePageStateType = {
     posts: PostsType[]
     newPostText: string
-    profile:null
+    profile: null
 }
 export type PostsType = {
     id: number
@@ -27,20 +38,20 @@ export type ProfileResponseType = {
     lookingForAJobDescription: string
     fullName: string
     userId: number
-    photos: {small: string, large: string}
+    photos: { small: string, large: string }
 }
 
-let initialState: ProfilePageType = {
+let initialState: ProfilePageStateType = {
     posts: [
         {id: 1, message: 'Hello samurai', likesCount: 712},
         {id: 2, message: 'How are you?', likesCount: 491},
         {id: 3, message: "I'm a ninja", likesCount: 31},
     ],
     newPostText: '',
-    profile:null
+    profile: null
 }
 
-export const profileReducer = (state = initialState, action: ActionsType) => {
+export const profileReducer = (state = initialState, action: ProfileActionsType) => {
     switch (action.type) {
         case 'ADD_POST':
             const newPost = {
@@ -86,4 +97,15 @@ export const setUserProfile = (profile: null) => {
         type: 'SET-USER-PROFILE',
         profile,
     } as const
+}
+
+//Thunk Creators
+export type ThunkProfileType = ThunkAction<void, ProfilePageStateType, unknown, ProfileActionsType>
+export const getUserProfileTC = (userId: number): ThunkProfileType => {
+    return (dispatch) => {
+        profileAPI.getShowProfile(userId)
+            .then((data) => {
+                dispatch(setUserProfile(data))
+            })
+    }
 }

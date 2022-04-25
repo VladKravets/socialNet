@@ -3,23 +3,22 @@ import s from './Profile.module.css'
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {RootStateType} from "../../Redux/redux-store";
-import {ProfileResponseType, setUserProfile} from "../../Redux/profile-reducer";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {profileAPI} from "../../API/Api";
+import {ProfileResponseType,getUserProfileTC} from "../../Redux/profile-reducer";
+import { useLocation, useNavigate, useParams} from "react-router-dom";
 
-type MapStateToPropsType = {
-    profile: ProfileResponseType | null
-}
+
+
 
 class ProfileContainer extends React.Component<any> {
 
 
     componentDidMount() {
-        let userID = this.props.router.params.userID;
-        profileAPI.getShowProfile(userID)
-            .then((data) => {
-                this.props.setUserProfile(data)
-            })
+        let userId = this.props.router.params.userID;
+        if (!userId) {
+            userId = 21297
+        }
+        debugger
+        this.props.getUserProfileTC(userId)
     }
 
     render() {
@@ -31,7 +30,12 @@ class ProfileContainer extends React.Component<any> {
         );
     }
 }
-
+type MapStateToPropsType = {
+    profile: ProfileResponseType | null
+}
+export type MapDispatchToPropsType={
+    getUserProfileTC:(userId:number)=>void
+}
 const mapStateToProps = (state: RootStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile
 })
@@ -52,4 +56,4 @@ export const withRouter = (Component: JSXElementConstructor<any>): JSXElementCon
     return ComponentWithRouterProp;
 }
 
-export default connect(mapStateToProps, {setUserProfile})(withRouter(ProfileContainer))
+export default connect(mapStateToProps, {getUserProfileTC})(withRouter(ProfileContainer))
