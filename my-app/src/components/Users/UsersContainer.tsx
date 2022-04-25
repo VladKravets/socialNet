@@ -3,7 +3,7 @@ import {RootStateType} from "../../Redux/redux-store";
 import {
     unfollow, follow,
     setCurrentPage,
-    UsersType, setToggleFollowingProgress, getUsersThunkCreator, changePageThunkCreator,
+    UsersType, setToggleFollowingProgress, getUsersThunkCreator,
 } from "../../Redux/users-reducer";
 import React from "react";
 import {Users} from "./Users";
@@ -23,7 +23,7 @@ export class UsersCont extends React.Component<UsersPropsType> {
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.changePageThunkCreator(pageNumber, this.props.pageSize)
+        this.props.getUsersThunkCreator(pageNumber, this.props.pageSize)
         // this.props.setCurrentPage(pageNumber)
         // this.props.setLoading(true)
         // usersAPI.getUsers(pageNumber, this.props.pageSize)
@@ -65,7 +65,6 @@ export type MapDispatchToPropsType = {
     setCurrentPage: (currentPage: number) => void
     setToggleFollowingProgress: (isFetching: boolean, userId: number) => void
     getUsersThunkCreator:(currentPage: number, pageSize: number) => void
-    changePageThunkCreator : (page: number, pageSize: number) =>void
 
 }
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -109,6 +108,5 @@ export default connect(mapStateToProps, {
     setCurrentPage,
     setToggleFollowingProgress,
     getUsersThunkCreator,
-    changePageThunkCreator
 
 })(UsersCont)

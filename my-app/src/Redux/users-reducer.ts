@@ -139,6 +139,7 @@ export type ThunkUsersType = ThunkAction<void, UsersPageStateType, unknown, User
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkUsersType => {
     return (dispatch: Dispatch) => {
+        dispatch(setCurrentPage(currentPage))
         dispatch(setLoading(true))
         usersAPI.getUsers(currentPage, pageSize)
             .then((data) => {
@@ -148,17 +149,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number): Thu
             })
     }
 }
-export const changePageThunkCreator = (page: number, pageSize: number) => {
-    return (dispatch: Dispatch) => {
-        dispatch(setLoading(true))
-        dispatch(setCurrentPage(page))
-        usersAPI.getUsers(page, pageSize)
-            .then((data) => {
-                dispatch(setLoading(false))
-                dispatch(setUsers(data.items))
-            })
-    }
-}
+
 export const follow = (userId:number): ThunkUsersType => {
     return (dispatch: Dispatch) => {
         dispatch(setToggleFollowingProgress(true,userId))
