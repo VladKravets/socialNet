@@ -1,6 +1,5 @@
 import {authAPI} from "../API/Api";
 import {ThunkAction} from "redux-thunk";
-import {UsersPageStateType, UsersReducerActionsType} from "./users-reducer";
 import {Dispatch} from "redux";
 
 export const SET_USER_DATA = 'SET-USER-DATA';

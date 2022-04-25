@@ -1,15 +1,7 @@
 import {ProfileActionsType} from "./state";
 import {ThunkAction} from "redux-thunk";
-import {
-    setCurrentPage,
-    setLoading, setTotalUsersCount,
-    setUsers,
-    ThunkUsersType,
-    UsersPageStateType,
-    UsersReducerActionsType
-} from "./users-reducer";
-import {Dispatch} from "redux";
-import {profileAPI, usersAPI} from "../API/Api";
+
+import {profileAPI} from "../API/Api";
 
 type ProfilePageStateType = {
     posts: PostsType[]
