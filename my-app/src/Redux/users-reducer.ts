@@ -1,6 +1,6 @@
 import {usersAPI} from "../API/Api";
 import {Dispatch} from "redux";
-import {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {ThunkAction} from "redux-thunk";
 
 export type PhotosType = {
     small: string
@@ -138,14 +138,24 @@ export const setToggleFollowingProgress = (isFetching: boolean, userId: number) 
 export type ThunkUsersType = ThunkAction<void, UsersPageStateType, unknown, UsersReducerActionsType>
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkUsersType => {
-
-    return (dispatch: Dispatch, getState: () => UsersPageStateType) => {
+    return (dispatch: Dispatch) => {
         dispatch(setLoading(true))
         usersAPI.getUsers(currentPage, pageSize)
             .then((data) => {
                 dispatch(setUsers(data.items))
                 dispatch(setTotalUsersCount(data.totalCount))
                 dispatch(setLoading(false))
+            })
+    }
+}
+export const changePageThunkCreator = (page: number, pageSize: number) => {
+    return (dispatch: Dispatch) => {
+        dispatch(setLoading(true))
+        dispatch(setCurrentPage(page))
+        usersAPI.getUsers(page, pageSize)
+            .then((data) => {
+                dispatch(setLoading(false))
+                dispatch(setUsers(data.items))
             })
     }
 }
