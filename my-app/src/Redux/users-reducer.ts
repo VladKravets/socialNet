@@ -1,4 +1,6 @@
 import {usersAPI} from "../API/Api";
+import {Dispatch} from "redux";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
 
 export type PhotosType = {
     small: string
@@ -38,14 +40,16 @@ export type ToogleInFollowingProgress = {
     userId: number
     isFetching: boolean
 }
-export type UsersReducerType =
-    FollowUserActionType
-    | UnfollowUserActionType
-    | SetUsersActionType
-    | SetCurrentPageActionType
-    | SetUserTotalCountActionType
-    | SetIsLoadingActionType
-    | ToogleInFollowingProgress
+export type UsersReducerActionsType =
+    FollowUserActionType |
+    UnfollowUserActionType |
+    SetUsersActionType |
+    SetCurrentPageActionType |
+    SetUserTotalCountActionType |
+    SetIsLoadingActionType |
+    ToogleInFollowingProgress
+
+
 export type UsersType = {
     id: number
     photos: PhotosType
@@ -55,7 +59,7 @@ export type UsersType = {
     location: UserLocationType
 }
 
-export type UsersPageType = {
+export type UsersPageStateType = {
     users: UsersType[]
     pageSize: number
     totalUsersCount: number
@@ -64,16 +68,16 @@ export type UsersPageType = {
     followingInProgress: Array<number>
 }
 
-let initialState: UsersPageType = {
+let initialState: UsersPageStateType = {
     users: [],
     pageSize: 5,
     totalUsersCount: 0,
-    currentPageSize: 5,
+    currentPageSize: 1,
     isLoading: false,
     followingInProgress: []
 }
 
-export const usersReducer = (state = initialState, action: UsersReducerType): UsersPageType => {
+export const usersReducer = (state = initialState, action: UsersReducerActionsType): UsersPageStateType => {
     switch (action.type) {
         case 'FOLLOW':
             return {
@@ -129,9 +133,13 @@ export const setToggleFollowingProgress = (isFetching: boolean, userId: number) 
 } as const)
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+//ThunkCreators
 
-    return (dispatch) => {
+export type ThunkUsersType = ThunkAction<void, UsersPageStateType, unknown, UsersReducerActionsType>
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number): ThunkUsersType => {
+
+    return (dispatch: Dispatch, getState: () => UsersPageStateType) => {
         dispatch(setLoading(true))
         usersAPI.getUsers(currentPage, pageSize)
             .then((data) => {
