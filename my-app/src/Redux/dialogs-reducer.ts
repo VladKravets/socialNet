@@ -1,4 +1,4 @@
-import {ActionsType, DialogType, MessageType} from "./state";
+import {ProfileActionsType, DialogType, MessageType} from "./state";
 
 type DialogsInitialState = {
     messages: Array<MessageType>
@@ -25,7 +25,7 @@ let initialState: DialogsInitialState = {
     newMessageBody: ''
 }
 
-export const dialogsReducer = (state = initialState, action: ActionsType) => {
+export const dialogsReducer = (state = initialState, action: ProfileActionsType) => {
     switch (action.type) {
         case 'UPDATE-NEW-MESSAGE-BODY':
             return {

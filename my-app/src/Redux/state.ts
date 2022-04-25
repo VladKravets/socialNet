@@ -3,7 +3,7 @@ import {dialogsReducer} from "./dialogs-reducer";
 import {UsersType} from "./users-reducer";
 
 // export type StoreType =Store & ReturnType<typeof reducers>
-export type ActionsType =
+export type ProfileActionsType =
     AddPostActionType
     | ChangeNewTextActionType
     | UpdateMessageBodyActionType
@@ -20,7 +20,7 @@ export type StoreType = {
     subscribe: (callback: () => void) => void
     _rerenderEntireTree: (_state: {}) => void
     getState: () => RootStateType
-    dispatch: (action: ActionsType) => void
+    dispatch: (action: ProfileActionsType) => void
 }
 export type AddPostActionType = {
     type: "ADD_POST"
