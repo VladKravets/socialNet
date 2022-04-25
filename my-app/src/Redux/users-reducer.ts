@@ -120,8 +120,8 @@ export const usersReducer = (state = initialState, action: UsersReducerActionsTy
 }
 
 
-export const follow = (userID: number) => ({type: "FOLLOW", userID})
-export const unfollow = (userID: number) => ({type: 'UNFOLLOW', userID})
+export const followSuccess = (userID: number) => ({type: "FOLLOW", userID})
+export const unfollowSuccess = (userID: number) => ({type: 'UNFOLLOW', userID})
 export const setUsers = (users: UsersType[]) => ({type: 'SET-USERS', users})
 export const setCurrentPage = (currentPage: number) => ({type: 'SET-CURRENT-PAGE', currentPage})
 export const setTotalUsersCount = (totalUsersCount: number) => ({type: 'SET-USERS-TOTAL-COUNT', totalUsersCount})
@@ -156,6 +156,30 @@ export const changePageThunkCreator = (page: number, pageSize: number) => {
             .then((data) => {
                 dispatch(setLoading(false))
                 dispatch(setUsers(data.items))
+            })
+    }
+}
+export const follow = (userId:number): ThunkUsersType => {
+    return (dispatch: Dispatch) => {
+        dispatch(setToggleFollowingProgress(true,userId))
+        usersAPI.postUsers(userId)
+            .then((data) => {
+                if (data.resultCode === 0) {
+                    dispatch(followSuccess(userId))
+                }
+                dispatch(setToggleFollowingProgress(false,userId))
+            })
+    }
+}
+export const unfollow = (userId:number): ThunkUsersType => {
+    return (dispatch: Dispatch) => {
+        dispatch(setToggleFollowingProgress(true,userId))
+        usersAPI.deleteUsers(userId)
+            .then((data) => {
+                if (data.resultCode === 0) {
+                    dispatch(unfollowSuccess(userId))
+                }
+                dispatch(setToggleFollowingProgress(false,userId))
             })
     }
 }
