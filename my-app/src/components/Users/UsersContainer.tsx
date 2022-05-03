@@ -8,6 +8,7 @@ import {
 import React from "react";
 import {Users} from "./Users";
 import {Prealoader} from "../../common/Prealoder/Prealoader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 export class UsersCont extends React.Component<UsersPropsType> {
@@ -64,7 +65,7 @@ export type MapDispatchToPropsType = {
     unfollow: (userID: number) => void
     setCurrentPage: (currentPage: number) => void
     setToggleFollowingProgress: (isFetching: boolean, userId: number) => void
-    getUsersThunkCreator:(currentPage: number, pageSize: number) => void
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
 
 }
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
@@ -102,6 +103,7 @@ let mapStateToProps = (state: RootStateType): MapStateToPropsType => {
 //     }
 // }
 
+let AuthRedirectComponent = withAuthRedirect(UsersCont)
 
 export default connect(mapStateToProps, {
     follow, unfollow,
@@ -109,4 +111,4 @@ export default connect(mapStateToProps, {
     setToggleFollowingProgress,
     getUsersThunkCreator,
 
-})(UsersCont)
+})(AuthRedirectComponent)

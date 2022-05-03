@@ -31,7 +31,6 @@ const Dialogs = (props: DialogsPropsProps) => {
         props.handlerChangeMessage(body)
         // props.dispatch({type: 'UPDATE-NEW-MESSAGE-BODY', body})
     }
-    if (!props.isAuth) return <Navigate to={'/login'}/>
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
