@@ -5,7 +5,6 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/redux-store";
 import {ProfileResponseType, getUserProfileTC} from "../../Redux/profile-reducer";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import { withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
 
@@ -58,5 +57,4 @@ export const withRouter = (Component: JSXElementConstructor<any>): JSXElementCon
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfileTC}),
     withRouter,
-    withAuthRedirect
 )(ProfileContainer)
