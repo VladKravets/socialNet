@@ -14,16 +14,19 @@ class ProfileContainer extends React.Component<any> {
     componentDidMount() {
         let userId = this.props.router.params.userID;
         if (!userId) {
-            userId = 21297
+            userId = 21297     //21297
         }
         this.props.getUserProfileTC(userId)
+
         this.props.getUserStatusTC(userId)
+
     }
 
     render() {
         return (
             <div className={s.profile}>
-                <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
+                <Profile {...this.props} profile={this.props.profile} status={this.props.status}
+                         updateStatus={this.props.updateUserStatusTC}/>
             </div>
         );
     }
@@ -31,12 +34,12 @@ class ProfileContainer extends React.Component<any> {
 
 type MapStateToPropsType = {
     profile: ProfileResponseType | null,
-    status:string
+    status: string
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status:state.profilePage.status
+    status: state.profilePage.status
 })
 
 
@@ -58,6 +61,6 @@ export const withRouter = (Component: JSXElementConstructor<any>): JSXElementCon
 
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfileTC,getUserStatusTC,updateUserStatusTC}),
+    connect(mapStateToProps, {getUserProfileTC, getUserStatusTC, updateUserStatusTC}),
     withRouter,
 )(ProfileContainer)

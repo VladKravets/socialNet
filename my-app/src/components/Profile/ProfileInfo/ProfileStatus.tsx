@@ -1,5 +1,4 @@
 import React, {ChangeEvent} from 'react';
-import {logDOM} from "@testing-library/react";
 
 export type ProfileStatusPropsType = {
     status: string
@@ -33,7 +32,6 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
     }
 
     componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{}>, snapshot?: any) {
-        debugger
         if (prevProps.status !== this.props.status) {
             this.setState({
                 status: this.props.status

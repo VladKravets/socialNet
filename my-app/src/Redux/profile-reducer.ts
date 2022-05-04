@@ -158,8 +158,7 @@ export const updateUserStatusTC = (status: string): ThunkProfileType => {
         profileAPI.updateStatus(status)
             .then((data) => {
                 if (data.resultCode === 0) {
-                    debugger
-                    dispatch(setUserStatus(data))
+                    dispatch(setUserStatus(status))
                 }
             })
     }
