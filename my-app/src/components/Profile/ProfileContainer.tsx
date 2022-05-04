@@ -17,6 +17,7 @@ class ProfileContainer extends React.Component<any> {
             userId = 21297
         }
         this.props.getUserProfileTC(userId)
+        this.props.getUserStatus(userId)
     }
 
     render() {
@@ -29,11 +30,13 @@ class ProfileContainer extends React.Component<any> {
 }
 
 type MapStateToPropsType = {
-    profile: ProfileResponseType | null
+    profile: ProfileResponseType | null,
+    status:string
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
+    status:state.profilePage.status
 })
 
 

@@ -1,5 +1,4 @@
 import axios from "axios";
-import {UsersType} from "../Redux/users-reducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -16,13 +15,13 @@ export const usersAPI = {
                 return responce.data
             })
     },
-    deleteUsers(id:number) {
+    deleteUsers(id: number) {
         return instance.delete(`follow/${id}`)
             .then(responce => {
                 return responce.data
             })
     },
-    postUsers(id:number) {
+    postUsers(id: number) {
         return instance.post(`follow/${id}`)
             .then(responce => {
                 return responce.data
@@ -38,9 +37,21 @@ export const authAPI = {
     }
 
 }
-export const profileAPI={
-    getShowProfile(userID:number){
-        return instance.get(`profile/`+ userID)
+export const profileAPI = {
+    getShowProfile(userID: number) {
+        return instance.get(`profile/` + userID)
+            .then(responce => {
+                return responce.data
+            })
+    },
+    getStatus(userID: number) {
+        return instance.get(`profile/status` + userID)
+            .then(responce => {
+                return responce.data
+            })
+    },
+    updateStatus(status: string) {
+        return instance.put(`profile/status`, {status: status})
             .then(responce => {
                 return responce.data
             })

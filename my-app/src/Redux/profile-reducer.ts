@@ -1,12 +1,44 @@
-import {ProfileActionsType} from "./state";
 import {ThunkAction} from "redux-thunk";
 
 import {profileAPI} from "../API/Api";
 
+export type AddPostActionType = {
+    type: "ADD_POST"
+    postMessage: string
+}
+export type ChangeNewTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+export type UpdateMessageBodyActionType = {
+    type: 'UPDATE-NEW-MESSAGE-BODY'
+    body: string
+}
+export type SendMessageActionType = {
+    type: 'SEND_MESSAGE'
+}
+export type SetUserProfileType = {
+    type: 'SET-USER-PROFILE',
+    profile: null
+}
+export type SetUserStatus = {
+    type: 'SET-STATUS',
+    status: string
+}
+export type ProfileActionsType =
+    AddPostActionType
+    | ChangeNewTextActionType
+    | UpdateMessageBodyActionType
+    | SendMessageActionType
+    | SetUserProfileType
+    | SetUserStatus
+
+
 type ProfilePageStateType = {
     posts: PostsType[]
     newPostText: string
-    profile: null
+    profile: null,
+    status: string
 }
 export type PostsType = {
     id: number
@@ -40,7 +72,8 @@ let initialState: ProfilePageStateType = {
         {id: 3, message: "I'm a ninja", likesCount: 31},
     ],
     newPostText: '',
-    profile: null
+    profile: null,
+    status: ''
 }
 
 export const profileReducer = (state = initialState, action: ProfileActionsType) => {
@@ -66,6 +99,11 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
                 ...state,
                 profile: action.profile
             }
+        case 'SET-STATUS':
+            return {
+                ...state,
+                status: action.status
+            }
         default:
             return state
     }
@@ -90,6 +128,12 @@ export const setUserProfile = (profile: null) => {
         profile,
     } as const
 }
+export const setUserStatus = (status: string) => {
+    return {
+        type: 'SET-STATUS',
+        status,
+    } as const
+}
 
 //Thunk Creators
 export type ThunkProfileType = ThunkAction<void, ProfilePageStateType, unknown, ProfileActionsType>
@@ -98,6 +142,14 @@ export const getUserProfileTC = (userId: number): ThunkProfileType => {
         profileAPI.getShowProfile(userId)
             .then((data) => {
                 dispatch(setUserProfile(data))
+            })
+    }
+}
+export const getUserStatusTC = (userId: number): ThunkProfileType => {
+    return (dispatch) => {
+        profileAPI.getStatus(userId)
+            .then((data) => {
+                dispatch(setUserStatus(data))
             })
     }
 }
