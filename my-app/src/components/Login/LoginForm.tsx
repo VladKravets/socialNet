@@ -9,6 +9,7 @@ export type ValuesType= {
 
 
 export const LoginForm:React.FC<any> = (props) => {
+
     return (
         <Formik
             initialValues={{
@@ -21,7 +22,7 @@ export const LoginForm:React.FC<any> = (props) => {
                 alert(JSON.stringify(values, null, 2));
             }}
         >
-            <Form>
+            <Form onSubmit={props.handleSubmit} >
                 <label htmlFor="firstName">First Name</label>
                 <Field id="firstName" name="firstName" placeholder="Your name" />
 
