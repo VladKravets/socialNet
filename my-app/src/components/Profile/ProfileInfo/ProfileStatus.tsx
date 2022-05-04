@@ -1,4 +1,5 @@
 import React, {ChangeEvent} from 'react';
+import {logDOM} from "@testing-library/react";
 
 export type ProfileStatusPropsType = {
     status: string
@@ -26,8 +27,18 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         this.props.updateStatus(this.state.status)
     }
     onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({status: e.currentTarget.value})
+        this.setState({
+            status: e.currentTarget.value
+        })
+    }
 
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        debugger
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
     render() {
@@ -35,7 +46,7 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
             <div>
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activateEditMode}>{this.props.status}</span>
+                        <span onDoubleClick={this.activateEditMode}>{this.props.status || 'Status✎'}</span>
                     </div>
                 }
                 {this.state.editMode &&
