@@ -45,13 +45,13 @@ export const profileAPI = {
             })
     },
     getStatus(userID: number) {
-        return instance.get(`profile/status` + userID)
+        return instance.get(`profile/status/` + userID)
             .then(responce => {
                 return responce.data
             })
     },
     updateStatus(status: string) {
-        return instance.put(`profile/status`, {status: status})
+        return instance.put(`profile/status/`, {status: status})
             .then(responce => {
                 return responce.data
             })

@@ -1,4 +1,5 @@
-import {ProfileActionsType, DialogType, MessageType} from "./state";
+import {DialogType, MessageType} from "./state";
+import {ProfileActionsType} from "./profile-reducer";
 
 type DialogsInitialState = {
     messages: Array<MessageType>

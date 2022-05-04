@@ -1,19 +1,8 @@
-import {profileReducer} from "./profile-reducer";
-import {dialogsReducer} from "./dialogs-reducer";
-import {UsersType} from "./users-reducer";
+import {ProfileActionsType,} from "./profile-reducer";
 
 // export type StoreType =Store & ReturnType<typeof reducers>
-export type ProfileActionsType =
-    AddPostActionType
-    | ChangeNewTextActionType
-    | UpdateMessageBodyActionType
-    | SendMessageActionType
-    | SetUserProfileType
 
-export type SetUserProfileType = {
-    type: 'SET-USER-PROFILE',
-    profile: null
-}
+
 export type StoreType = {
     _state: RootStateType
     rerenderEntireTree: () => void
@@ -22,23 +11,13 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: ProfileActionsType) => void
 }
-export type AddPostActionType = {
-    type: "ADD_POST"
-    postMessage: string
-}
-export type ChangeNewTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}
-export type UpdateMessageBodyActionType = {
-    type: 'UPDATE-NEW-MESSAGE-BODY'
-    body: string
-}
-export type SendMessageActionType = {
-    type: 'SEND_MESSAGE'
-}
 
 
+
+
+
+
+// @ts-ignore
 const store: StoreType = {
     _state: {
         profilePage: {
@@ -83,11 +62,11 @@ const store: StoreType = {
     getState() {
         return this._state
     },
-    dispatch(action) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-        this._rerenderEntireTree(this._state)
-    }
+    // dispatch(action) {
+    //     this._state.profilePage = profileReducer(this._state.profilePage, action)
+    //     this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+    //     this._rerenderEntireTree(this._state)
+    // }
 }
 
 

@@ -3,7 +3,7 @@ import s from './Profile.module.css'
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/redux-store";
-import {ProfileResponseType, getUserProfileTC} from "../../Redux/profile-reducer";
+import {ProfileResponseType, getUserProfileTC, getUserStatusTC, updateUserStatusTC} from "../../Redux/profile-reducer";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {compose} from "redux";
 
@@ -17,13 +17,13 @@ class ProfileContainer extends React.Component<any> {
             userId = 21297
         }
         this.props.getUserProfileTC(userId)
-        this.props.getUserStatus(userId)
+        this.props.getUserStatusTC(userId)
     }
 
     render() {
         return (
             <div className={s.profile}>
-                <Profile {...this.props} profile={this.props.profile}/>
+                <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
             </div>
         );
     }
@@ -58,6 +58,6 @@ export const withRouter = (Component: JSXElementConstructor<any>): JSXElementCon
 
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfileTC}),
+    connect(mapStateToProps, {getUserProfileTC,getUserStatusTC,updateUserStatusTC}),
     withRouter,
 )(ProfileContainer)

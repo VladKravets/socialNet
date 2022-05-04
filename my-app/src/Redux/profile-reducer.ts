@@ -62,7 +62,7 @@ export type ProfileResponseType = {
     lookingForAJobDescription: string
     fullName: string
     userId: number
-    photos: { small: string, large: string }
+    photos: { small: string, large: string}
 }
 
 let initialState: ProfilePageStateType = {
@@ -150,6 +150,17 @@ export const getUserStatusTC = (userId: number): ThunkProfileType => {
         profileAPI.getStatus(userId)
             .then((data) => {
                 dispatch(setUserStatus(data))
+            })
+    }
+}
+export const updateUserStatusTC = (status: string): ThunkProfileType => {
+    return (dispatch) => {
+        profileAPI.updateStatus(status)
+            .then((data) => {
+                if (data.resultCode === 0) {
+                    debugger
+                    dispatch(setUserStatus(data))
+                }
             })
     }
 }
