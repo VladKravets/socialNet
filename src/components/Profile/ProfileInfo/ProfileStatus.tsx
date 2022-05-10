@@ -44,7 +44,7 @@ export class ProfileStatus extends React.Component<ProfileStatusPropsType> {
             <div>
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activateEditMode}>{this.props.status || 'Status✎'}</span>
+                        <span onDoubleClick={this.activateEditMode}>{this.props.status || 'Click to add status✎'}</span>
                     </div>
                 }
                 {this.state.editMode &&
