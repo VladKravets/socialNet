@@ -1,6 +1,6 @@
 import React from 'react';
 import {Form, Formik} from "formik";
-import s from '../../../../common/Button.module.css'
+import s from '../../../common/Button.module.css'
 import FormControl from "../../../common/FormControl/FormControl";
 import * as Yup from "yup";
 

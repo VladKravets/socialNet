@@ -1,44 +1,45 @@
-import {DialogType, MessageType} from "./state";
-import {ProfileActionsType} from "./profile-reducer";
+const SEND_MESSAGE = 'SEND-MESSAGE';
 
-type DialogsInitialState = {
-    messages: Array<MessageType>
-    dialogs: Array<DialogType>
+export type DialogsPageType = {
+    dialogs: DialogsType[]
+    messages: MessagesType[]
 }
-let initialState: DialogsInitialState = {
+export type MessagesType = {
+    id: number
+    message: string
+}
+export type DialogsType = {
+    id: number
+    name: string
+}
+
+const initialDialogs: DialogsPageType = {
+    dialogs: [
+        {id: 1, name: 'Chris'},
+        {id: 2, name: 'Kristen'},
+        {id: 3, name: 'Victor'},
+        {id: 4, name: 'Mary'},
+        {id: 5, name: 'Zac'},
+        {id: 6, name: 'Carey'}
+    ],
     messages: [
         {id: 1, message: 'Hi'},
-        {id: 2, message: 'How are you?'},
-        {id: 3, message: "'I'm great"},
-        {id: 4, message: 'Hello everyone'},
-        {id: 5, message: 'I ♥ you'},
-        {id: 6, message: 'Where are you?'},
-    ],
-    dialogs: [
-        {id: 1, name: 'Vlad'},
-        {id: 2, name: 'Natasha'},
-        {id: 3, name: 'Yuliana'},
-        {id: 4, name: 'Svetlana'},
-        {id: 5, name: 'Alex'},
-        {id: 6, name: 'Mihail'},
+        {id: 2, message: 'How is it goin?'},
+        {id: 3, message: 'Awesome!'}
     ]
 }
 
-export const dialogsReducer = (state = initialState, action: ProfileActionsType) => {
+export const dialogsReducer = (state = initialDialogs, action: DialogsReducerActionType):DialogsPageType => {
     switch (action.type) {
-        case 'UPDATE-NEW-MESSAGE-BODY':
-            return {
-                ...state,
-            }
-        case 'SEND_MESSAGE':
-
-            return {
-                ...state,
-                messages: [...state.messages, {id: 7}]
-            }
+        case SEND_MESSAGE:
+            return {...state, messages: [...state.messages, {id: 4, message: action.newDialogsText}]};
         default:
-            return state
+            return state;
     }
 }
-export const UpdateMessageBodyCreator = (body: string) => ({type: 'UPDATE-NEW-MESSAGE-BODY', body} as const)
-export const SendMessageCreator = () => ({type: 'SEND_MESSAGE'} as const)
+// ACTION TYPE
+export type DialogsReducerActionType = ReturnType<typeof sendMessageAC>;
+
+
+export const sendMessageAC = (newDialogsText: string) => ({type: SEND_MESSAGE, newDialogsText} as const)
+
