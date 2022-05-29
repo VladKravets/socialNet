@@ -21,7 +21,7 @@ type LoginType = {
 type MapStateTotPropsType = {
     isAuth: boolean
 }
-export const Login = (props: LoginType) => {
+const Login = (props: LoginType) => {
     const initialValues: InitialValuesType = {
         email: '',
         password: '',

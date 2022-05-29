@@ -4,7 +4,6 @@ import {ProfileActionsType} from "./profile-reducer";
 type DialogsInitialState = {
     messages: Array<MessageType>
     dialogs: Array<DialogType>
-    newMessageBody: string
 }
 let initialState: DialogsInitialState = {
     messages: [
@@ -22,8 +21,7 @@ let initialState: DialogsInitialState = {
         {id: 4, name: 'Svetlana'},
         {id: 5, name: 'Alex'},
         {id: 6, name: 'Mihail'},
-    ],
-    newMessageBody: ''
+    ]
 }
 
 export const dialogsReducer = (state = initialState, action: ProfileActionsType) => {
@@ -31,14 +29,12 @@ export const dialogsReducer = (state = initialState, action: ProfileActionsType)
         case 'UPDATE-NEW-MESSAGE-BODY':
             return {
                 ...state,
-                newMessageBody: action.body
             }
         case 'SEND_MESSAGE':
-            let body = state.newMessageBody
+
             return {
                 ...state,
-                newMessageBody: '',
-                messages: [...state.messages, {id: 7, message: body}]
+                messages: [...state.messages, {id: 7}]
             }
         default:
             return state

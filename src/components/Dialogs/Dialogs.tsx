@@ -1,14 +1,15 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./Message/MessageItem";
 import {DialogsPageType} from "../../Redux/state";
+import AddMessageForm from "./Message/AddMessageForm";
 
 
 type DialogsPropsProps = {
     dialogsPage: DialogsPageType
     handlerChangeMessage: (body: string) => void
-    sendMessage: () => void
+    sendMessage: (values:string) => void
     isAuth: boolean
 }
 
@@ -20,16 +21,10 @@ const Dialogs = (props: DialogsPropsProps) => {
     let messagesElements = props.dialogsPage.messages
         .map(message => <MessageItem key={message.id} id={message.id} message={message.message}/>)
 
-    const onSendMessageClick = () => {
-        props.sendMessage()
-        props.handlerChangeMessage('')
-        // dispatch(SendMessageCreator())
-    }
-    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        let body = e.target.value
-        props.handlerChangeMessage(body)
-        // props.dispatch({type: 'UPDATE-NEW-MESSAGE-BODY', body})
-    }
+   const addNewMessage=(values:any)=>{
+        props.sendMessage(values.newMessageBody)
+   }
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
@@ -42,11 +37,11 @@ const Dialogs = (props: DialogsPropsProps) => {
                     <div>
                         <textarea
                             value={newMessageBody}
-                            onChange={onNewMessageChange}
+                            onChange={addNewMessage}
                             placeholder={'enter your message....'}/>
                     </div>
                     <div>
-                        <button onClick={onSendMessageClick}>Send</button>
+                       <AddMessageForm sendMessage={addNewMessage}/>
                     </div>
                 </div>
             </div>
