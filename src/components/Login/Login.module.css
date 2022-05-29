@@ -1,0 +1,12 @@
+.formContainer {
+    width: 350px;
+    height: 370px;
+    padding: 10px;
+    background: #072f3a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 10px 15px 15px #0d2328;
+    border-radius: 5px;
+}
