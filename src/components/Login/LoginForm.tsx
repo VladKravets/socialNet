@@ -3,7 +3,6 @@ import {Field, Form, Formik} from "formik";
 import * as Yup from 'yup';
 import a from '../../common/Button.module.css'
 import s from "./Login.module.css"
-
 type LoginPropsType = {
     callback: (email: string, pass: string, remember: boolean, setSubmitting: (isSubmition: boolean) => void, setStatus: (status: string) => void) => void
 }

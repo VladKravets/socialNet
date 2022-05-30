@@ -63,8 +63,7 @@ export const getAuthUserDataTC = (): ThunkAuthType => (dispatch) => {
             }
         })
 }
-export const loginTC = (email: string, password: string, rememberMe: boolean,
-                      setStatus: (status?: any) => void): ThunkAuthType => async dispatch => {
+export const loginTC = (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void): ThunkAuthType => async dispatch => {
     const res = await authAPI.login(email, password, rememberMe)
     if (res.data.resultCode === 0) {
         dispatch(getAuthUserDataTC());

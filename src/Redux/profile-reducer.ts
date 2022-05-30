@@ -47,7 +47,7 @@ const initialProfile: ProfilePageType = {
     status: ''
 }
 
-export const profileReducer = (state: ProfilePageType = initialProfile, action: ProfileReducerActionType): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialProfile, action: ProfilerActionsType): ProfilePageType => {
     switch (action.type) {
         case ADD_POST:
             const newPost = {
@@ -65,7 +65,7 @@ export const profileReducer = (state: ProfilePageType = initialProfile, action: 
     }
 }
 // ACTION TYPE
-export type ProfileReducerActionType = ReturnType<typeof addPostAC>
+export type ProfilerActionsType = ReturnType<typeof addPostAC>
     | ReturnType<typeof setUserProfileAC>
     | ReturnType<typeof setStatusAC>
 
@@ -75,7 +75,7 @@ export const setUserProfileAC = (profile: ProfileResponseType) => ({type: SET_US
 export const setStatusAC = (status: string) => ({type: SET_STATUS, status} as const)
 
 //Thunk Creators
-export type ThunkProfileType = ThunkAction<void, ProfilePageType, unknown, ProfileReducerActionType>
+export type ThunkProfileType = ThunkAction<void, ProfilePageType, unknown, ProfilerActionsType>
 export const getUserProfileTC = (userId: number): ThunkProfileType => async dispatch => {
     const response = await profileAPI.getShowProfile(userId)
     dispatch(setUserProfileAC(response.data));

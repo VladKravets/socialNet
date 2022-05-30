@@ -1,4 +1,4 @@
-import {ProfileActionsType,} from "./profile-reducer";
+import {ProfilerActionsType} from "./profile-reducer";
 
 // export type StoreType =Store & ReturnType<typeof reducers>
 
@@ -9,7 +9,7 @@ export type StoreType = {
     subscribe: (callback: () => void) => void
     _rerenderEntireTree: (_state: {}) => void
     getState: () => RootStateType
-    dispatch: (action: ProfileActionsType) => void
+    dispatch: (action: ProfilerActionsType) => void
 }
 
 
