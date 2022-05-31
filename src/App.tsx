@@ -6,11 +6,10 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {Music} from "./components/Music";
 import {News} from "./components/News/News";
 import {Settings} from "./components/Settings";
-import Login from "./components/Login/Login";
+import {Login} from "./components/Login/Login";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginForm from "./components/Login/LoginForm";
 
 
 const App = () => {
