@@ -1,43 +1,47 @@
-import React from 'react';
-import {Form, Formik} from "formik";
-import s from '../../../common/Button.module.css'
-import FormControl from "../../../common/FormControl/FormControl";
-import * as Yup from "yup";
+import React from "react";
+import {Field, Form, Formik} from "formik";
+import * as Yup from 'yup';
 
-type AddMessageFormType = {
-    sendMessage: (values: string) => void
+type SendTextFormPropsType = {
+    onSubmitButtonClick: (title: string) => void
+    submitButtonName: string
+    type: "input" | "select" | "textarea"
 }
-type InitialValuesType = {
-    newMessage: string
-}
+const MessageSendValidationSchema = Yup.object().shape({
+    message: Yup.string()
+        .min(2, 'Минимум 2 символа!')
+        .max(100, 'Максимум 100 символов')
+        .required('Обязательно'),
+});
 
-const AddMessageForm = (props: AddMessageFormType) => {
-    const initialValues: InitialValuesType = {
-        newMessage: ''
-    }
-    let addNewMessage = (values: InitialValuesType) => {
-        props.sendMessage(values.newMessage);
-    }
-    const validationSchema = Yup.object({
-        newMessage: Yup.string().max(3000, `The message is too long`).required('required')
-    })
+export const SendTextForm = (props: SendTextFormPropsType) => {
 
     return (
-        <div>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={(values, {resetForm}) => {
-                    addNewMessage(values);
-                    resetForm({values: {newMessage: ''}})
-                }}>
+        <Formik
+            initialValues={{
+                message: ''
+            }}
+            validationSchema={MessageSendValidationSchema}
+            onSubmit={(values, actions) => {
+                props.onSubmitButtonClick(values.message);
+                actions.resetForm({})
+            }}
+        >
+            {({errors, touched}) => (
                 <Form>
-                    <FormControl control={'textarea'} name={'newMessage'} placeholder={"add a message ..."}/>
-                    <button className={s.button} type={'submit'}>Send</button>
+                    <Field
+                        as={props.type}
+                        id={"message"}
+                        name={"message"}
+                    />
+                    {errors.message && touched.message && <div>{errors.message}</div>}
+                    <div>
+                        <button type={"submit"}>{props.submitButtonName}
+                        </button>
+                    </div>
                 </Form>
-            </Formik>
-        </div>
+            )}
+        </Formik>
     )
-}
-
-export default AddMessageForm;
+        ;
+};

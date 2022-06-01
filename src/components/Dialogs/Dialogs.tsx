@@ -3,7 +3,7 @@ import s from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./Message/MessageItem";
 import {DialogsPageType} from "../../Redux/state";
-import AddMessageForm from "./Message/AddMessageForm";
+import {SendTextForm} from "./Message/AddMessageForm";
 
 
 type DialogsPropsProps = {
@@ -35,13 +35,8 @@ const Dialogs = (props: DialogsPropsProps) => {
                 <div>{messagesElements}</div>
                 <div>
                     <div>
-                        <textarea
-                            value={newMessageBody}
-                            onChange={addNewMessage}
-                            placeholder={'enter your message....'}/>
-                    </div>
-                    <div>
-                       <AddMessageForm sendMessage={addNewMessage}/>
+                        <SendTextForm onSubmitButtonClick={props.sendMessage} submitButtonName={"Отправить"}
+                                      type={"input"}/>
                     </div>
                 </div>
             </div>

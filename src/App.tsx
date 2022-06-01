@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Nav from "./components/Nav/Nav";
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {Music} from "./components/Music";
 import {News} from "./components/News/News";
@@ -10,9 +10,22 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "./Redux/redux-store";
+import {Prealoader} from "./common/Prealoder/Prealoader";
+import {initializeApp} from "./Redux/appReducer";
 
 
 const App = () => {
+
+    let initialized = useSelector<RootStateType, boolean>(state => state.App.initialized)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(initializeApp())
+    }, [])
+
+    if (!initialized) return <Prealoader/>
     return (
 
             <div className={'app'}>
