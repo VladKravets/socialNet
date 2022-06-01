@@ -1,20 +1,54 @@
 import React from 'react';
 import s from './Header.module.css'
 import {NavLink} from "react-router-dom";
-import {AuthDataType} from "../../Redux/auth-reducer";
+import {logout} from "../../Redux/auth-reducer";
+import {useDispatch} from "react-redux";
 
-type HeaderPropsType = {
-    data: AuthDataType
-    isAuth: boolean
+export type ProfileType = {
+    aboutMe: string
+    contacts: {
+        facebook: string
+        website: string
+        vk: string
+        twitter: string
+        instagram: string,
+        youtube: string,
+        github: string,
+        mainLink: string
+    },
+    lookingForAJob: boolean,
+    lookingForAJobDescription: string,
+    fullName: string,
+    userId: number,
+    photos: {
+        small: string,
+        large: string
+    }
+
 }
-const Header:React.FC<HeaderPropsType> = (props) => {
+type HeaderPropsType = {
+    isAuth: boolean
+    login: string
+    ava: string
+    SetAuthUserData?: (id: number, login: string, email: string) => void
+    SetUserProfile?: (profile: ProfileType) => void
+}
+const Header: React.FC<HeaderPropsType> = (props) => {
+    let dispatch = useDispatch()
+
+    let logoutClickHandler = () => {
+        dispatch(logout())
+    }
     return (
         <header className={s.header}>
             <div className={s.title}>.forEach()</div>
 
             <div className={s.loginBlock}>
                 {props.isAuth
-                    ? `Hello,${props.data}`
+                    ? <div>
+                        Hello,{props.login}
+                        <button onClick={logoutClickHandler}>LOG OUT</button>
+                    </div>
                     : <NavLink to={'/login'}>
                         Please login to continue
                     </NavLink>

@@ -9,7 +9,7 @@ export type MapStatePropsType = {
 
 export const mapStateToPropsForRedirect = (state: AppStateType): MapStatePropsType => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.Auth.data.isAuth
     }
 }
 

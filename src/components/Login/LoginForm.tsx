@@ -1,61 +1,67 @@
-import {Field, Form, Formik, FormikHelpers} from "formik";
-import {loginTC} from "../../Redux/auth-reducer";
-import {useDispatch} from "react-redux";
-import s from "./Login.module.css"
-type LoginFormType = {
-    email: string
-    password: string
-    rememberMe: boolean
+import React from 'react';
+import {Field, Form, Formik} from "formik";
+import * as Yup from 'yup';
+
+type LoginPropsType = {
+    callback: (email: string, pass: string, remember: boolean, setSubmitting: (isSubmition: boolean) => void, setStatus: (status: string) => void) => void
+    responseMessage: string
 }
 
-export const LoginForm = () => {
+const LoginValidationSchema = Yup.object().shape({
+    login: Yup.string()
+        .email('Неверный email')
+        .required('Обязательно'),
+    password: Yup.string()
+        .min(2, 'Минимум 2 символа!')
+        .required('Обязательно')
+});
 
-    const validateLoginForm = (values: LoginFormType) => {
-        const errors = {} as LoginFormType;
-        if (!values.email) {
-            errors.email = 'Email is required';
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-            errors.email = 'Invalid email address';
-        }
-        if (!values.password) {
-            errors.password = 'password is required';
-        } else if (!/^(?=.*\d)(?=.*[a-z]).{8,}$/i.test(values.password)) {
-            errors.password = 'must contain 8 characters and one digit or letter';
-        }
-        return errors;
-    }
+const LoginForm = (props: LoginPropsType) => {
 
-    const dispatch = useDispatch();
+    return (
+        <Formik
+            initialValues={{
+                login: '',
+                password: '',
+                remember: false,
+            }}
+            onSubmit={(values, actions) => {
+                actions.setStatus(null)
+                props.callback(values.login, values.password, values.remember, actions.setSubmitting, actions.setStatus)
+                actions.resetForm({})
+                actions.setSubmitting(true)
+                console.log('values ', values)
+            }}
 
-    const submit = (values: LoginFormType, actions: FormikHelpers<any>) => {
-        if (values.email && values.password) {
-            dispatch(loginTC(values.email, values.password, values.rememberMe, actions.setStatus));
-        }
-        actions.setSubmitting(false)
-    }
-    return <Formik
-        initialValues={{email: '', password: '', rememberMe: false}}
-        validate={validateLoginForm}
-        onSubmit={(values, actions) => submit(values, actions)}>
-        {({isSubmitting, errors, status, touched}) => (
-            <Form>
-                <div>
-                    <Field className={s.superInput} placeholder="login" type="text" name="email"/>
-                    {touched.email && errors.email ? <div className={s.errorMessage}>{errors.email}</div> : null}
-                </div>
-                <div>
-                    <Field className={s.superInput} placeholder="password" type="password" name="password"/>
-                    {touched.password && errors.password ? <div className={s.errorMessage}>{errors.password}</div> : null}
-                </div>
-                {status && <div className={s.errorMessage}>{status}</div>}
-                <div>
-                    <Field type="checkbox" name="rememberMe"/>
-                    Remember me
-                </div>
-                <button type="submit" disabled={isSubmitting}>
-                    Login
-                </button>
-            </Form>
-        )}
-    </Formik>
+            validationSchema={LoginValidationSchema}
+        >
+            {
+                ({status, isSubmitting, touched, errors}) => (
+
+                    <Form>
+                        <div>
+                            <label htmlFor="login">Login</label>
+                            <Field name="login" id={"login"}/>
+                            {errors.login && touched.login && <div>{errors.login}</div>}
+                        </div>
+                        <div>
+                            <label htmlFor="password">Pass</label>
+                            <Field type="password" name="password"/>
+                            {errors.password && touched.password && <div>{errors.password}</div>}
+                        </div>
+                        <div>
+                            <label htmlFor="remember">Remember Me</label>
+                            <Field type="checkbox" name="remember"/>
+                        </div>
+                        {status && <div>{status}</div>}
+                        <div>
+                            <button type="submit" name="submit" disabled={isSubmitting}>Login</button>
+                        </div>
+                    </Form>
+                )
+            }
+        </Formik>
+    )
 }
+
+export default LoginForm;

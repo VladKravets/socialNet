@@ -6,15 +6,15 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import {Music} from "./components/Music";
 import {News} from "./components/News/News";
 import {Settings} from "./components/Settings";
-import {Login} from "./components/Login/Login";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
 
 
 const App = () => {
     return (
-        <BrowserRouter>
+
             <div className={'app'}>
                 <div className='app-wrapper'>
                     <HeaderContainer/>
@@ -34,7 +34,6 @@ const App = () => {
                     </div>
                 </div>
             </div>
-        </BrowserRouter>
     );
 }
 

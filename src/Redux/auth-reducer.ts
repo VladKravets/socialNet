@@ -1,81 +1,97 @@
+import {Dispatch} from "redux";
 import {authAPI} from "../API/Api";
-import {ThunkAction} from "redux-thunk";
 
+const SET_USER_DATA = 'SET_USER_DATA';
+const SET_LOGIN = "SET_LOGIN"
+const SET_LOGOUT = "SET_LOGOUT"
+const SET_ERROR_MESSAGE = "SET_ERROR_MESSAGE"
 
-const SET_USER_DATA = 'SET-USER-DATA';
+export type UserAuthType = {
+    data: UserDataType
+    messages: Array<string>
+    fieldsErrors: Array<string>
+    resultCode: number
+}
 
-export type AuthDataType = {
-    id: number | null
-    email: string | null
-    login: string | null
+export type UserDataType = {
+    id: number | null,
+    login: string,
+    email: string,
     isAuth: boolean
 }
-export type AuthResponseType = {
-    resultCode: number
-    messages: Array<string>
+
+let InitialState: UserAuthType = {
     data: {
-        id: number
-        email: string
-        login: string
-    }
-}
-export type LoginResponseType = {
-    resultCode: number
-    messages: Array<string>
-    data: {
-        userId: number
-    }
+        id: null,
+        login: "",
+        email: "",
+        isAuth: false
+    },
+    messages: [],
+    fieldsErrors: [],
+    resultCode: 0
 }
 
-const initialUsers: AuthDataType = {
-    id: null,
-    email: null,
-    login: null,
-    isAuth: false
-}
-
-export const authReducer = (state = initialUsers, action: AuthReducerActionType): AuthDataType => {
+export const AuthReducer = (state: UserAuthType = InitialState, action: ActionsType): UserAuthType => {
     switch (action.type) {
-        case SET_USER_DATA:
-            return {...state, ...action.data}
+        case SET_USER_DATA :
+            return {
+                ...state,
+                data: {...action.data}
+            }
+        case "SET_LOGIN":
+        case "SET_LOGOUT":
+            return {...state, data: {...state.data, isAuth: action.isAuth}}
+        case "SET_ERROR_MESSAGE":
+            return {...state, messages: action.messages}
         default:
-            return state;
+            return state
+
     }
 }
-export type AuthReducerActionType = ReturnType<typeof setUserDataAC>
+type ActionsType =
+    ReturnType<typeof setAuthUserData> |
+    ReturnType<typeof loginAC> |
+    ReturnType<typeof logoutAC> |
+    ReturnType<typeof setErrorMessages>
 
-// ACTION CREATORS
-export const setUserDataAC = (id: number | null, email: string | null, login: string | null, isAuth: boolean) => ({
-    type: SET_USER_DATA,
-    data: {id, email, login, isAuth}
-} as const);
+const loginAC = () => {
+    return ({type: SET_LOGIN, isAuth: true} as const)
+}
+const logoutAC = () => {
+    return ({type: SET_LOGOUT, isAuth: false} as const)
+}
+const setErrorMessages = (messages: string[]) => {
+    return ({type: SET_ERROR_MESSAGE, messages} as const)
+}
+export const setAuthUserData = (id: number, login: string, email: string) =>
+    ({type: SET_USER_DATA, data: {id, login, email, isAuth: true}} as const)
 
-
-export type ThunkAuthType = ThunkAction<void, AuthDataType, unknown, AuthReducerActionType>
-
-// THUNK CREATORS
-export const getAuthUserDataTC = (): ThunkAuthType => (dispatch) => {
-    return authAPI.authGet()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                let {id, email, login} = response.data.data;
-                dispatch(setUserDataAC(id, email, login, true));
+export const getAuthUserData = () => (dispatch: Dispatch) => {
+    return authAPI.me()
+        .then((response) => {
+            if (response.resultCode === 0) {
+                let {id, login, email} = response.data
+                dispatch(setAuthUserData(id, login, email))
             }
         })
 }
-export const loginTC = (email: string, password: string, rememberMe: boolean, setStatus: (status?: any) => void): ThunkAuthType => async dispatch => {
-    const res = await authAPI.login(email, password, rememberMe)
-    if (res.data.resultCode === 0) {
-        dispatch(getAuthUserDataTC());
-    } else {
-        setStatus(res.data.messages)
-    }
-}
-export const logoutTC = (): ThunkAuthType => async dispatch => {
-    const res = await authAPI.logout()
-    if (res.data.resultCode === 0) {
-        dispatch(setUserDataAC(null, null, null, false));
-    }
-}
+export const login = (login: string, password: string, remember: boolean, setSubmitting: (isSubmition: boolean) => void, setStatus: (status: string) => void) => (dispatch: Dispatch<any>) => {
 
-export default authReducer;
+    authAPI.login(login, password, remember)
+        .then((data) => {
+            if (data.data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            } else {
+                dispatch(setErrorMessages(data.data.messages))
+                setStatus(data.data.messages[0])
+            }
+            setSubmitting(false)
+        })
+}
+export const logout = () => (dispatch: Dispatch) => {
+    authAPI.logout().then(data => {
+        console.log(data);
+        dispatch(logoutAC())
+    })
+}

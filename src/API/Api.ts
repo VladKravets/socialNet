@@ -29,20 +29,19 @@ export const usersAPI = {
     }
 }
 export const authAPI = {
-    authGet() {
-        return instance.get(`auth/me`)
-            .then(responce => {
-                return responce.data
-            })
+    me() {
+        return (
+            instance.get(`auth/me`,).then(response => response.data)
+        )
     },
-    login(email: string, password: string, rememberMe: boolean) {
-        return instance.post('auth/login', {email, password, rememberMe: false});
+    login(email: string, password: string, remember: boolean) {
+        return (instance.post('auth/login', {email, password, remember}))
     },
     logout() {
-        return instance.delete('auth/login');
+        return (instance.post('auth/logout'))
     }
-
 }
+
 export const profileAPI = {
     getShowProfile(userID: number) {
         return instance.get(`profile/` + userID)

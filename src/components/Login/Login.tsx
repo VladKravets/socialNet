@@ -1,32 +1,38 @@
-import s from "./Login.module.css"
 import React from 'react';
-import {useSelector} from "react-redux";
-import {Navigate} from "react-router-dom";
-import {AppStateType} from "../../Redux/redux-store";
-import {LoginForm} from "./LoginForm";
+import LoginForm from "./LoginForm";
+import {useDispatch, useSelector} from "react-redux";
+import {login} from "../../Redux/auth-reducer";
+import {useLocation, useNavigate} from "react-router";
+import {RootStateType} from "../../Redux/redux-store";
 
-export const Login = () => {
-    const authStatus = useSelector<AppStateType, boolean>(state => state.auth.isAuth);
+const Login = () => {
 
-    return (<>
-            {authStatus
-                ?
-                <Navigate to={'/profile'}/>
-                : <div className={s.loginBlock}>
-                    <div className={`${s.loginBlock} ${s.loginInfo}`}>
-                        <h2>Network</h2>
-                        <span>To log in get registered here
-                            Or use common test account credentials:
-                            <h4>Email: free@samuraijs.com</h4>
-                            <h4>Password: free</h4></span>
-                        <img src="/img/log_info.png"/>
-                    </div>
-                    <div className={`${s.loginBlock} ${s.loginForm}`}>
-                        <h2>Sign in</h2>
-                        <LoginForm/>
-                    </div>
-                </div>
-            }
-        </>
-    )
-};
+    const navigate = useNavigate()
+    const location: any = useLocation() // TODO ДИЧЬ! ПОЧИНИТЬ НА САППОРТЕ "ANY"
+
+    const dispatch = useDispatch()
+    const isAuth = useSelector<RootStateType, boolean>(state => state.Auth.data.isAuth)
+    const responseMessage = useSelector<RootStateType, string>(state => state.Auth.messages[0])
+
+    //if loggedIn then kick user to back page if it was or to profile page
+    if (isAuth) {
+        if (location.state?.from) {
+            navigate(location.state.from)
+        } else {
+            navigate('/profile', {replace: true})
+        }
+    }
+
+    const loginCallback = (email: string, pass: string, remember: boolean, setSubmitting: (isSubmition: boolean) => void, setStatus: (status: string) => void) => {
+        dispatch(login(email, pass, remember, setSubmitting, setStatus))
+    }
+
+
+    return <div>
+        <h3>Login</h3>
+        <LoginForm callback={loginCallback} responseMessage={responseMessage}/>
+    </div>
+}
+
+
+export default Login;
