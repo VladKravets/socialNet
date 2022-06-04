@@ -1,48 +1,37 @@
 import React from 'react';
-import s from './Dialogs.module.css'
-import DialogItem from "./DialogItem/DialogItem";
-import MessageItem from "./Message/MessageItem";
-import {DialogsPageType} from "../../Redux/state";
-import {SendTextForm} from "./Message/AddMessageForm";
+import cn from './Dialogs.module.scss'
+import {Message} from './Message/Message';
+import {DialogItem} from './DialogItem/DialogItem';
+import {DialogType, MessageType} from '../../redux/reducers/dialogs-reducer';
+import {DialogFormTextarea} from './DialogFormTextarea';
 
-
-type DialogsPropsProps = {
-    dialogsPage: DialogsPageType
-    handlerChangeMessage: (body: string) => void
-    sendMessage: (values:string) => void
+type DialogsPropsType = {
+    addMessage: () => void;
+    dialogs: Array<DialogType>;
+    messages: Array<MessageType>;
     isAuth: boolean
 }
 
-const Dialogs = (props: DialogsPropsProps) => {
+export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
-    let dialogsElements = props.dialogsPage.dialogs
-        .map(dialog => <DialogItem key={dialog.id} name={dialog.name} id={dialog.id}/>)
-    let newMessageBody = props.dialogsPage.newMessageBody
-    let messagesElements = props.dialogsPage.messages
-        .map(message => <MessageItem key={message.id} id={message.id} message={message.message}/>)
-
-   const addNewMessage=(values:any)=>{
-        props.sendMessage(values.newMessageBody)
-   }
+    const dialogsEl = props.dialogs.map(dialog => <DialogItem key={dialog.id} {...dialog} />)
+    const messagesEl = props.messages.map(message => <Message key={message.id} message={message.message}/>)
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
-                {dialogsElements}
+        <div className={cn.dialogs}>
+            <div className={cn.dialogs__users}>
+                <ul>
+                    {dialogsEl}
+                </ul>
             </div>
-
-            <div className={s.messages}>
-                <div>{messagesElements}</div>
+            <div className={cn.dialogs__messages}>
+                <div>{messagesEl}</div>
                 <div>
-                    <div>
-                        <SendTextForm onSubmitButtonClick={props.sendMessage} submitButtonName={"Отправить"}
-                                      type={"input"}/>
-                    </div>
+
+                    {/*//TODO вариант форму родителем сделать; дети (children) для сборки формы*/}
+                    <DialogFormTextarea addMessage={props.addMessage} />
                 </div>
             </div>
         </div>
-
     );
-};
-
-export default Dialogs;
+}

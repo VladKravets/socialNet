@@ -1,33 +1,42 @@
-import {sendMessageAC} from "../../Redux/dialogs-reducer";
-import Dialogs from "./Dialogs";
-import {connect} from "react-redux";
-import {DialogsPageType} from "../../Redux/dialogs-reducer";
-import {compose, Dispatch} from "redux";
-import {RootStateType} from "../../Redux/redux-store";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import React from "react";
+// import React from 'react';
 
-type MapStateToPropsType = {
-    dialogsPage: DialogsPageType
+import {addMessageAC, DialogType, MessageType} from '../../redux/reducers/dialogs-reducer';
+import {Dialogs} from './Dialogs';
+import {compose, Dispatch} from 'redux';
+import {connect} from 'react-redux';
+import {AppStateType} from '../../redux/reducers';
+import {withAuthRedirect} from '../../HOCS/withAuthRedirect';
+import React from 'react';
+
+type MapStatePropsType = {
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+    isAuth: boolean
 }
-type MapDispatchToPropsType = {
-    sendMessage: (newMessage: string) => void
+
+type MapDispatchPropsType = {
+    addMessage: (messageText: string) => void
 }
-let mapStateToProps = (state: RootStateType): MapStateToPropsType => {
+
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
-        dialogsPage: state.dialogsPage,
+        dialogs: state.dialogsPage.dialogs,
+        messages: state.dialogsPage.messages,
+        isAuth: state.auth.isAuth
     }
 }
-let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
+
+let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        sendMessage: (newDialogsText: string) => {
-            dispatch(sendMessageAC(newDialogsText))
+        addMessage: (messageText: string) => {
+            dispatch(addMessageAC(messageText))
         }
     }
 }
 
+export const DialogsContainer = compose<React.ComponentType>(
+    withAuthRedirect,
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(mapStateToProps, mapDispatchToProps)
+)
+(Dialogs)
 
-export default compose<React.ComponentType>(
-    connect(mapStateToProps, mapDispatchToProps),
-    withAuthRedirect
-)(Dialogs);

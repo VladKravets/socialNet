@@ -1,54 +1,44 @@
-import React, {useState, ChangeEvent, useEffect} from "react";
+import React from 'react';
 
-type ProfileStatusPropsType = {
-    status: string
-    updateStatus: (status: string) => void
+type ProfileStatusType = {
+    status: string | null
+    updateStatus: (statusText: string) => void
 }
 
-export const ProfileStatus = React.memo((props: ProfileStatusPropsType) => {
+export const ProfileStatus: React.FC<ProfileStatusType> = (props) => {
+    const [isEditMode, setIsEditMode] = React.useState(false)
+    const [statusText, setStatusText] = React.useState<string | null>(props.status)
 
-    let [localState, setLocaleState] = useState({
-        editMode: false,
-        status: props.status
-    })
-    //local state
+    React.useEffect(() => {
+        setStatusText(props.status)
+    }, [props.status])
 
-    useEffect(() => {
-
-        if (localState.status !== props.status) {
-            setLocaleState({...localState, status: props.status})
-        }
-    }, [localState, props.status])
-
-    let activateEditMode = () => {
-        setLocaleState({...localState, editMode: true})
+    const onDoubleClickHandler = () => {
+        setIsEditMode(true)
     }
-    let deactivateEditMode = () => {
-        setLocaleState({...localState, editMode: false})
-        props.updateStatus(localState.status)
+
+    const onBlurHandler = () => {
+        setIsEditMode(false)
+        if (props.status === statusText) return
+        if (statusText) props.updateStatus(statusText.trim())
     }
-    let onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setLocaleState({...localState, status: e.target.value})
+
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setStatusText(e.currentTarget.value)
     }
 
     return (
-
         <div>
-            {!localState.editMode
-                ? <div>
-                    <span onDoubleClick={activateEditMode}>{props.status || 'no status'}</span>
-                </div>
-                : <div>
-                    <input
-                        autoFocus
-                        onChange={onStatusChange}
-                        onBlur={deactivateEditMode}
-                        type="text"
-                        value={localState.status}
-                    />
-                </div>
+            {!isEditMode
+                ? <span onDoubleClick={onDoubleClickHandler}>
+                    {props.status ? props.status : <span style={{color: '#999'}}>change status</span>}
+                  </span>
+                : <input value={statusText!}
+                         onBlur={onBlurHandler}
+                         onChange={onChangeHandler}
+                         autoFocus={true}/>
             }
         </div>
+    )
+}
 
-    );
-});

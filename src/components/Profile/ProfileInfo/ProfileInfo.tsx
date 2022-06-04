@@ -1,29 +1,52 @@
 import React from 'react';
-import s from './ProfileInfo.module.css'
-import {ProfileResponseType} from "../../../Redux/profile-reducer";
-import {ProfileStatus} from "./ProfileStatus"
+import avatar from '../../../assets/img/user.png';
+import {Preloader} from '../../Preloader/Preloader';
+import {ProfileStatus} from './ProfileStatus';
+import {Nullable, ProfileUserType} from '../../../api/api';
+import {ProfileData} from './ProfileData';
+import {ProfileDataForm} from './ProfileDataForm';
 
-export type ProfileInfoType = {
-    profile: ProfileResponseType | null
-    status: string
-    updateStatus: (status: string) => void
+type ProfileInfoPropsType = {
+    isOwner: boolean
+    profile: Nullable<ProfileUserType>
+    status: Nullable<string>
+    updateStatus: (statusText: string) => void
+    savePhoto: (photo: File) => void
 }
 
-export const ProfileInfo: React.FC<ProfileInfoType> = (props) => {
-    return (
-        <div>
-            <div>
-                <img
-                    src="https://media.istockphoto.com/photos/business-man-pushing-large-stone-up-to-hill-business-heavy-tasks-and-picture-id825383494?k=20&m=825383494&s=612x612&w=0&h=tEqZ5HFZcM3lmDm_cmI7hOeceiqy9gYrkyLTTkrXdY4="
-                    alt=""/>
-            </div>
-            <div className={s.descriptionBlock}>
-                <img src={props.profile?.photos.large} alt={'user logo'}/>
-                <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
-                <div>About me:{props.profile?.aboutMe}</div>
-                <hr/>
+export const ProfileInfo: React.FC<ProfileInfoPropsType> =
+    ({isOwner, profile, status, updateStatus, savePhoto}) => {
 
+        const [editMode, setEditMode] = React.useState(false)
+
+        const onProfilePhotoSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+            if (e.target.files) {
+                savePhoto(e.target.files[0])
+            }
+        }
+
+        if (!profile) return (
+            <Preloader/>
+        )
+
+        return (
+            <div>
+                <img src={profile.photos.large ? profile.photos.large : avatar} alt={'avatar'}/>
+                <div>
+                    {isOwner && <input type="file" onChange={onProfilePhotoSelected}/>}
+                </div>
+                <ProfileStatus status={status} updateStatus={updateStatus}/>
+
+                ----------------------
+
+                {editMode
+                    ? <ProfileDataForm profile={profile}/>
+                    : <ProfileData profile={profile}/>
+                }
+
+                <br/>
             </div>
-        </div>
-    )
-};
+        );
+    }
+
+

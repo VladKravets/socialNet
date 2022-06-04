@@ -1,24 +1,30 @@
 import React from 'react';
-import s from './Profile.module.css'
-import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {ProfileResponseType} from "../../Redux/profile-reducer";
+import {ProfileInfo} from './ProfileInfo/ProfileInfo';
+import {MyPostsContainer} from '../MyPosts/MyPostsContainer';
+import {ProfileUserType} from '../../api/api';
 
-export type ProfilePropsType = {
-    profile: ProfileResponseType | null
-    status:string
-    updateStatus: (status:string)=>void
+type ProfilePropsType = {
+    isOwner: boolean
+    profile: ProfileUserType | null
+    status: string | null
+    updateStatus: (statusText: string) => void
+    savePhoto: (photo: File) => void
 }
 
+export const Profile: React.FC<ProfilePropsType> = (props) => {
 
-const Profile: React.FC<ProfilePropsType> = (props) => {
+
 
     return (
-        <div className={s.profile}>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
-            <MyPostsContainer/>
-        </div>
-    );
-};
+        <>
+            <br/>
+            -----------------------------PROFILE-------------------------------------------------
 
-export default Profile;
+            <ProfileInfo isOwner={props.isOwner} profile={props.profile} status={props.status}
+                         updateStatus={props.updateStatus}
+                         savePhoto={props.savePhoto}
+            />
+            <MyPostsContainer/>
+        </>
+    );
+}

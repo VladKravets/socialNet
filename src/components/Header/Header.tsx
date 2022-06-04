@@ -1,65 +1,34 @@
 import React from 'react';
-import s from './Header.module.css'
-import {NavLink} from "react-router-dom";
-import {logout} from "../../Redux/auth-reducer";
-import {useDispatch} from "react-redux";
+import style from './Header.module.scss';
+import {Link} from 'react-router-dom';
+import {SButton} from '../SButton/SButton';
 
-export type ProfileType = {
-    aboutMe: string
-    contacts: {
-        facebook: string
-        website: string
-        vk: string
-        twitter: string
-        instagram: string,
-        youtube: string,
-        github: string,
-        mainLink: string
-    },
-    lookingForAJob: boolean,
-    lookingForAJobDescription: string,
-    fullName: string,
-    userId: number,
-    photos: {
-        small: string,
-        large: string
-    }
-
-}
-type HeaderPropsType = {
+type HeaderType = {
+    login: string | null
     isAuth: boolean
-    login: string
-    ava: string
-    SetAuthUserData?: (id: number, login: string, email: string) => void
-    SetUserProfile?: (profile: ProfileType) => void
+    logout: () => void
 }
-const Header: React.FC<HeaderPropsType> = (props) => {
-    let dispatch = useDispatch()
 
-    let logoutClickHandler = () => {
-        dispatch(logout())
+export const Header: React.FC<HeaderType> = ({isAuth, login, logout}) => {
+
+    const logoutHandle = () => {
+        logout()
     }
-    return (
-        <header className={s.header}>
-            <div className={s.title}>.forEach()</div>
 
-            <div className={s.loginBlock}>
-                {props.isAuth
-                    ? <div>
-                        Hello,{props.login}
-                        <button onClick={logoutClickHandler}>LOG OUT</button>
-                    </div>
-                    : <NavLink to={'/login'}>
-                        Please login to continue
-                    </NavLink>
-                }
+    return (
+        <header className={style.header}>
+            <div className={'container'}>
+                <div className={style.logo}>Logo</div>
+                <div>
+                    {
+                        isAuth
+                            ? <>hi, {` ${login} `}
+                                <SButton onClick={logoutHandle}>выйти</SButton>
+                            </>
+                            : <Link to={'/login'}>Login</Link>
+                    }
+                </div>
             </div>
         </header>
-    );
-};
-export default Header;
-
-
-
-
-
+    )
+}

@@ -1,64 +1,127 @@
-import axios from "axios";
+import axios from 'axios';
 
 const instance = axios.create({
-    withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
+    withCredentials: true,
     headers: {
         "API-KEY": "3bb1f301-4343-478c-bd6d-e432168f19d7"
     }
 })
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}}`)
-            .then(responce => {
-                return responce.data
-            })
+    getUsers(currentPage: number = 1, pageSize: number) {
+        return instance.get<GetUsersResponseType>(`users?page=${currentPage}&count=${pageSize}`)
     },
-    deleteUsers(id: number) {
-        return instance.delete(`follow/${id}`)
-            .then(responce => {
-                return responce.data
-            })
+    follow(id: number) {
+        return instance.post<CommonResponseType>(`follow/${id}`)
     },
-    postUsers(id: number) {
-        return instance.post(`follow/${id}`)
-            .then(responce => {
-                return responce.data
-            })
-    }
-}
-export const authAPI = {
-    me() {
-        return (
-            instance.get(`auth/me`,).then(response => response.data)
-        )
+    unfollow(id: number) {
+        return instance.delete<CommonResponseType>(`follow/${id}`)
     },
-    login(email: string, password: string, remember: boolean) {
-        return (instance.post('auth/login', {email, password, remember}))
-    },
-    logout() {
-        return (instance.post('auth/logout'))
+    getProfile(userId: number) {
+        return profileAPI.getProfile(userId)
     }
 }
 
 export const profileAPI = {
-    getShowProfile(userID: number) {
-        return instance.get(`profile/` + userID)
-            .then(responce => {
-                return responce.data
-            })
+    getProfile(userId: number) {
+        return instance.get<ProfileUserType>(`profile/${userId}`)
     },
-    getStatus(userID: number) {
-        return instance.get(`profile/status/` + userID)
-            .then(responce => {
-                return responce.data
-            })
+    getStatus(userId: number) {
+        return instance.get<string>(`/profile/status/${userId}`)
     },
-    updateStatus(status: string) {
-        return instance.put(`profile/status/`, {status: status})
-            .then(responce => {
-                return responce.data
-            })
+    updateStatus(statusText: string) {
+        return instance.put<CommonResponseType>(`/profile/status`, {status: statusText})
+    },
+    savePhoto(photoFile: FormData) {
+        return instance.put<CommonResponseType<{ photos: PhotosType }>>(`/profile/photo`, photoFile, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
     }
+}
+
+export const authAPI = {
+    me() {
+        return instance.get<CommonResponseType<MeResponseType>>(`auth/me`)
+    },
+    login(email: string, password: string, rememberMe: boolean = false, captcha?: string) {
+        return instance.post<CommonResponseType<{userId: number}>>(`auth/login`, {email, password, rememberMe, captcha})
+    },
+    logout() {
+        return instance.post<CommonResponseType>(`auth/logout`)
+    }
+}
+export const securityAPI = {
+    getCaptcha() {
+        return instance.get<{url: string}>('security/get-captcha-url')
+    }
+}
+
+
+// ----------- types -----------
+
+export type Nullable<T> = T | null
+
+export enum ResultCodeType {
+    success = 0,
+    failed = 1,
+    captcha = 10
+}
+
+type CommonResponseType<D = {}> = {
+    data: D
+    fieldsErrors: Array<string>
+    messages: Array<string>
+    resultCode: ResultCodeType
+}
+
+export type PhotosType = {
+    small: Nullable<string>
+    large: Nullable<string>
+}
+
+export type UserType = {
+    name: string
+    id: number
+    photos: PhotosType
+    followed: boolean
+    status: Nullable<string>
+    uniqueUrlName: null
+}
+
+type GetUsersResponseType = {
+    error: null
+    items: Array<UserType>
+    totalCount: number
+}
+
+type MeResponseType = {
+    email: string
+    id: number
+    login: string
+}
+
+export type ContactsType = {
+    //TODO как сделать правильно? без этой типизации в ProfileInfo нельзя после .map по объекту прокинуть динамически ключ
+    [key: string]: Nullable<string>
+    facebook: Nullable<string>
+    github: Nullable<string>
+    instagram: Nullable<string>
+    mainLink: Nullable<string>
+    twitter: Nullable<string>
+    vk: Nullable<string>
+    website: Nullable<string>
+    youtube: Nullable<string>
+}
+
+export type ProfileUserType = {
+    aboutMe: Nullable<string>
+    contacts: ContactsType
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription: Nullable<string>
+    photos: PhotosType
+    userId: number
 }
