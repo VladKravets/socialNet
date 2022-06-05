@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Montserrat:wght@600&display=swap');
+
+.ProfileInfoBlock {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    margin-bottom: 120px;
+}
+
+.userName {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.userAvatar {
+    border-radius: 100%;
+    margin-bottom: 20px;
+}
+
+.addFileBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.labelAddPhoto {
+    font-size: 15px;
+    border: 1px solid black;
+    padding: 7px 3px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.labelAddPhoto:hover {
+    background-color: #23c483;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+    transition: all 0.2s linear;
+}
+
+.labelAddPhoto:active {
+    transform: translateY(-1px);
+}
+
+input[type='file'] {
+    display: none;
+    visibility: hidden;
+}
