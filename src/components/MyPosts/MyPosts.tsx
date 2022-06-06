@@ -45,10 +45,10 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     return (
         <div className={cn.wrapper}>
-            <PostFormTextarea addPost={props.addPost} />
-            <div>
+            <div className={cn.title}>
                 My posts
             </div>
+            <PostFormTextarea addPost={props.addPost} />
             {postsEl}
         </div>
     );
