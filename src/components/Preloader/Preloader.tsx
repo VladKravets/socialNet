@@ -3,16 +3,10 @@ import s from './Preloader.module.css'
 
 export const Preloader = () => {
     return (
-        <div className={s.preloader}>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+        <div className={s.spinner}>
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
     );
 };

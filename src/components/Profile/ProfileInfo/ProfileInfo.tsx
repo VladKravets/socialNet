@@ -5,6 +5,9 @@ import {ProfileStatus} from './ProfileStatus';
 import {Nullable, ProfileUserType} from '../../../api/api';
 import {ProfileData} from './ProfileData';
 import {ProfileDataForm} from './ProfileDataForm';
+import s from './ProfileInfo.module.css'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
 
 type ProfileInfoPropsType = {
     isOwner: boolean
@@ -30,14 +33,23 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> =
         )
 
         return (
-            <div>
-                <img src={profile.photos.large ? profile.photos.large : avatar} alt={'avatar'}/>
+            <div className={s.ProfileInfoBlock}>
                 <div>
-                    {isOwner && <input type="file" onChange={onProfilePhotoSelected}/>}
-                </div>
-                <ProfileStatus status={status} updateStatus={updateStatus}/>
+                    <div className={s.userName}>
+                        {profile.fullName}✔
+                    </div>
 
-                ----------------------
+                    <ProfileStatus status={status} updateStatus={updateStatus}/>
+                    <div className={s.addFileBlock}>
+                        <img className={s.userAvatar} src={profile.photos.large ? profile.photos.large : avatar}
+                             alt={'avatar'}/>
+                        {isOwner &&<div>
+                            <label htmlFor={'firstImg'} className={s.labelAddPhoto}><FontAwesomeIcon icon={faPlus}/>Change photo</label>
+                            <input id={'firstImg'}  type="file" onChange={onProfilePhotoSelected}/>
+                        </div>
+                        }
+                    </div>
+                </div>
 
                 {editMode
                     ? <ProfileDataForm profile={profile}/>

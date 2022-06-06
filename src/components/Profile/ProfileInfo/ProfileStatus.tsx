@@ -1,4 +1,5 @@
 import React from 'react';
+import s from './ProfileStatus.module.css'
 
 type ProfileStatusType = {
     status: string | null
@@ -28,15 +29,16 @@ export const ProfileStatus: React.FC<ProfileStatusType> = (props) => {
     }
 
     return (
-        <div>
+        <div className={s.statusBlock}>
             {!isEditMode
-                ? <span onDoubleClick={onDoubleClickHandler}>
-                    {props.status ? props.status : <span style={{color: '#999'}}>change status</span>}
+                ? <span className={s.status} onDoubleClick={onDoubleClickHandler}>
+                  💬 {props.status ? props.status : <span style={{color: '#999'}}>change status🖆</span>}
                   </span>
-                : <input value={statusText!}
-                         onBlur={onBlurHandler}
-                         onChange={onChangeHandler}
-                         autoFocus={true}/>
+                : <input
+                    value={statusText!}
+                    onBlur={onBlurHandler}
+                    onChange={onChangeHandler}
+                    autoFocus={true}/>
             }
         </div>
     )

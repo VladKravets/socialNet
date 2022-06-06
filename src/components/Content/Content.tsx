@@ -8,6 +8,7 @@ import ProfileContainer from '../Profile/ProfileContainer';
 import {Login} from '../Login/Login';
 import {withSuspense} from '../../HOCS/withSuspense';
 import {Preloader} from '../Preloader/Preloader';
+import {Home} from "../Home/Home";
 
 // import {DialogsContainer} from '../Dialogs/DialogsContainer';
 const DialogsContainer = React.lazy(() => import('../Dialogs/DialogsContainer')
@@ -21,12 +22,8 @@ type ContentPropsType = {}
 export const Content: React.FC<ContentPropsType> = (props) => {
     return (
         <div className={cn.content}>
-            ----------CONTENT---------- <br/>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium architecto, consequatur cumque
-            delectus doloremque eligendi error eveniet excepturi expedita hic itaque molestiae nam nesciunt nisi,
-            nostrum provident quis quod rem, soluta ullam. Ab adipisci at aut distinctio dolore libero nihil, nulla
-            optio, porro quas rerum sapiente, sint ullam? Autem, obcaecati!
             <Routes>
+                <Route path={'/home'} element={<Home/>}/>
                 <Route path={'/profile'} element={<ProfileContainer/>}/>
                 <Route path={'/profile/:userId'} element={<ProfileContainer/>}/>
                 {/*<Route path={'/dialogs/*'} element={<DialogsContainer/>}/>*/}
@@ -38,8 +35,9 @@ export const Content: React.FC<ContentPropsType> = (props) => {
                 {/*<Route path={'/dialogs/*'} element={withSuspense(<DialogsContainer />)}/>*/}
                 <Route path={'/users'} element={<UsersContainer/>}/>
                 <Route path={'/news'} element={<News/>}/>
-                <Route path={'/'}
-                       element={<div style={{border: '1px solid red', margin: 15}}>settings: home-url '/'</div>}/>
+                <Route
+                    path={'/settings'}
+                    element={<div style={{border: '1px solid red', margin: 15}}>settings: home-url '/'</div>}/>
                 <Route path={'/login'} element={<Login/>}/>
             </Routes>
         </div>
