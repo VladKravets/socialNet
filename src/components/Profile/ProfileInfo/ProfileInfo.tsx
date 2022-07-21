@@ -2,12 +2,11 @@ import React from 'react';
 import avatar from '../../../assets/img/user.png';
 import {Preloader} from '../../Preloader/Preloader';
 import {ProfileStatus} from './ProfileStatus';
-import {Nullable, ProfileUserType} from '../../../api/api';
 import {ProfileData} from './ProfileData';
 import {ProfileDataForm} from './ProfileDataForm';
-import s from './ProfileInfo.module.css'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons/faPlus";
+import {SButton} from '../../SButton/SButton';
+import {Nullable, ProfileUserType} from '../../../types';
+
 
 type ProfileInfoPropsType = {
     isOwner: boolean
@@ -15,10 +14,11 @@ type ProfileInfoPropsType = {
     status: Nullable<string>
     updateStatus: (statusText: string) => void
     savePhoto: (photo: File) => void
+    saveProfileInfo: (profileInfo: ProfileUserType, setStatus: (status?: any) => void) => void
 }
 
 export const ProfileInfo: React.FC<ProfileInfoPropsType> =
-    ({isOwner, profile, status, updateStatus, savePhoto}) => {
+    ({isOwner, profile, status, updateStatus, savePhoto, saveProfileInfo}) => {
 
         const [editMode, setEditMode] = React.useState(false)
 
@@ -28,31 +28,34 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> =
             }
         }
 
+        const toggleEditMode = (value: boolean) => {
+          setEditMode(value)
+        }
+
         if (!profile) return (
             <Preloader/>
         )
 
         return (
-            <div className={s.ProfileInfoBlock}>
+            <div>
+                <img src={profile.photos.large ? profile.photos.large : avatar}
+                     alt={'avatar'}/>
                 <div>
-                    <div className={s.userName}>
-                        {profile.fullName}✔
-                    </div>
-
-                    <ProfileStatus status={status} updateStatus={updateStatus}/>
-                    <div className={s.addFileBlock}>
-                        <img className={s.userAvatar} src={profile.photos.large ? profile.photos.large : avatar}
-                             alt={'avatar'}/>
-                        {isOwner &&<div>
-                            <label htmlFor={'firstImg'} className={s.labelAddPhoto}><FontAwesomeIcon icon={faPlus}/>Change photo</label>
-                            <input id={'firstImg'}  type="file" onChange={onProfilePhotoSelected}/>
-                        </div>
-                        }
-                    </div>
+                    {isOwner && <input type="file" onChange={onProfilePhotoSelected}/>}
                 </div>
+                <ProfileStatus status={status} updateStatus={updateStatus}/>
+
+                ----------------------
+
+                {!editMode && <SButton onClick={() => toggleEditMode(true)}>Edit
+                info</SButton> }
+
+                ------------------
 
                 {editMode
-                    ? <ProfileDataForm profile={profile}/>
+                    ? <ProfileDataForm profile={profile}
+                                       saveProfileInfo={saveProfileInfo}
+                    toggleEditMode={toggleEditMode}/>
                     : <ProfileData profile={profile}/>
                 }
 

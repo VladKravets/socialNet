@@ -6,13 +6,12 @@ import {PostType} from '../../redux/reducers/profile-reducer';
 import {PostFormTextarea} from './PostFormTextarea';
 
 
-
 type MyPostsPropsType = {
     posts: Array<PostType>;
     addPost: (newPost: string) => void
 }
 
-export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
+export const MyPosts: React.FC<MyPostsPropsType> = ({posts, addPost}) => {
 
     // let newPostEl = React.useRef<HTMLTextAreaElement | null>(null)
     // let newPostEl: React.RefObject<HTMLTextAreaElement> = React.createRef()
@@ -41,14 +40,14 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     //     //--------------------------------------------------- formik
     // }
 
-    const postsEl = props.posts.map(post => <Post key={post.id} {...post} />)
+    const postsEl = posts.map(post => <Post key={post.id} {...post} />)
 
     return (
         <div className={cn.wrapper}>
-            <div className={cn.title}>
+            <PostFormTextarea addPost={addPost} />
+            <div>
                 My posts
             </div>
-            <PostFormTextarea addPost={props.addPost} />
             {postsEl}
         </div>
     );

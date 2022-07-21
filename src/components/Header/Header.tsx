@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Header.module.scss';
 import {Link} from 'react-router-dom';
-import exitIcon from  '../../assets/img/exit.png'
+import {SButton} from '../SButton/SButton';
 
 type HeaderType = {
     login: string | null
@@ -18,15 +18,13 @@ export const Header: React.FC<HeaderType> = ({isAuth, login, logout}) => {
     return (
         <header className={style.header}>
             <div className={'container'}>
-                <div className={style.logo}>.forEach()</div>
-                <div className={style.userData}>
+                <div className={style.logo}>Logo</div>
+                <div>
                     {
                         isAuth
-                            ? <div className={style.blockLogin}>{` ${login} `}
-                                <div className={style.exit} onClick={logoutHandle}>
-                                    <img className={style.logoExit} src={exitIcon} alt=""/>
-                                </div>
-                            </div>
+                            ? <>hi, {` ${login} `}
+                                <SButton onClick={logoutHandle}>выйти</SButton>
+                            </>
                             : <Link to={'/login'}>Login</Link>
                     }
                 </div>

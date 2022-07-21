@@ -1,7 +1,7 @@
 import React from 'react';
 import {Navbar} from './Components/Navbar/Navbar';
 import {Content} from './Components/Content/Content';
-import {BrowserRouter, HashRouter} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import HeaderContainer from './Components/Header/HeaderContainer';
 import {useDispatch, useSelector} from 'react-redux';
 import {initializeApp} from './redux/reducers/app-reducer';
@@ -19,13 +19,14 @@ export const App: React.FC<AppPropsType> = () => {
     const dispatch = useDispatch()
 
     React.useEffect(() => {
+        // @ts-ignore
         dispatch(initializeApp())
     }, [])
 
     if (!isInitialized) return <Preloader />
 
     return (
-        <HashRouter>
+        <BrowserRouter>
             <div className="App">
                 <HeaderContainer/>
                 <div className={'container'}>
@@ -33,6 +34,6 @@ export const App: React.FC<AppPropsType> = () => {
                     <Content />
                 </div>
             </div>
-        </HashRouter>
+        </BrowserRouter>
     );
 }

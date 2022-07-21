@@ -1,12 +1,9 @@
 import React from 'react';
-import s from './Preloader.module.css'
 
 export const Preloader = () => {
     return (
-        <div className={s.spinner}>
-            <span></span>
-            <span></span>
-            <span></span>
+        <div style={{boxShadow: 'inset 0 0 10px green', padding: 15, margin: 15}}>
+            ... LOADING ...
         </div>
-    );
-};
+    )
+}
