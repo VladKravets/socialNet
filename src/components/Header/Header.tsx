@@ -2,7 +2,7 @@ import React from 'react';
 import style from './Header.module.scss';
 import {Link} from 'react-router-dom';
 import {SButton} from '../SButton/SButton';
-
+import logo from "../../assets/forEach()-logos/forEach()-logos.jpeg"
 type HeaderType = {
     login: string | null
     isAuth: boolean
@@ -18,11 +18,11 @@ export const Header: React.FC<HeaderType> = ({isAuth, login, logout}) => {
     return (
         <header className={style.header}>
             <div className={'container'}>
-                <div className={style.logo}>Logo</div>
+                    <img className={style.logo} src={logo} alt=""/>
                 <div>
                     {
                         isAuth
-                            ? <>hi, {` ${login} `}
+                            ? <>{` ${login} `}
                                 <SButton onClick={logoutHandle}>выйти</SButton>
                             </>
                             : <Link to={'/login'}>Login</Link>

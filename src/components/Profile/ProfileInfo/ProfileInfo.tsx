@@ -45,12 +45,8 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> =
                 </div>
                 <ProfileStatus status={status} updateStatus={updateStatus}/>
 
-                ----------------------
+                {!editMode && <SButton onClick={() => toggleEditMode(true)}>⚙</SButton> }
 
-                {!editMode && <SButton onClick={() => toggleEditMode(true)}>Edit
-                info</SButton> }
-
-                ------------------
 
                 {editMode
                     ? <ProfileDataForm profile={profile}

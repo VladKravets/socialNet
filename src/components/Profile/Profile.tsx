@@ -20,8 +20,6 @@ export const Profile: React.FC<ProfilePropsType> = (props) => {
     return (
         <>
             <br/>
-            -----------------------------PROFILE-------------------------------------------------
-
             <ProfileInfo isOwner={props.isOwner} profile={props.profile} status={props.status}
                          updateStatus={props.updateStatus}
                          savePhoto={props.savePhoto}

@@ -5,14 +5,14 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background: $accentColor;
+  background: #271802;
   color: #ededf7;
   margin-bottom: 30px;
   padding: 10px 0;
   box-shadow: 0 1px 5px -1px $accentColor;
 
-  .logo {
-    font-size: 28px;
+  .logo{
+   height: 70px;
   }
 
   a {
