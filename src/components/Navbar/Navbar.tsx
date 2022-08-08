@@ -4,7 +4,11 @@ import gif from "../../assets/img/tom.gif"
 import cn from './Navbar.module.scss'
 
 export const Navbar = () => {
-    const cln = ({isActive}: { isActive: boolean }) => isActive ? `${cn.default} ${cn.active}` : `${cn.default}`
+    const cln = (
+        {isActive}
+            : { isActive: boolean }) => isActive
+        ? `${cn.default} ${cn.active}`
+        : `${cn.default}`
 
     return (
         <nav className={cn.navbar}>
